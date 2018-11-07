@@ -6,7 +6,7 @@ output: pdf_document
 ---
 
 ```{r global_options, echo = FALSE}
-knitr::opts_chunk$set(fig.width=9, fig.height=8, fig.path='figs/',
+knitr::opts_chunk$set(fig.width=5, fig.height=4, fig.path='figs/',
                       warning=FALSE, message=FALSE, error=FALSE)
 ```
 
