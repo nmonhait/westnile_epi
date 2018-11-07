@@ -5,11 +5,48 @@ date: "12/3/2018"
 output: pdf_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r global_options, echo = FALSE}
+knitr::opts_chunk$set(fig.width=9, fig.height=8, fig.path='figs/',
+                      warning=FALSE, message=FALSE, error=FALSE)
 ```
 
 
+```{r packages, echo = FALSE}
+library(DT)
+library(dplyr)
+library(broom)
+library(assertive)
+library(tidyverse)
+library(stringi)
+library(stringr)
+library(readr)
+library(ggplot2)
+library(gridExtra)
+library(ggthemes)
+library(dlnm)
+library(pander)
+library(tikzDevice)
+library(packrat)
+library(knitr)
+library(xtable)
+library(tinytex)
+library(lubridate)
+library(shiny)
+library(kableExtra)
+library(lubridate)
+library(forcats)
+library(devtools)
+library(plotflow)
+library(scales)
+library(viridis)
+```
+
+
+```{r read and clean data}
+
+il_wvn <- read_csv("../data/data_il.csv")
+
+```
 
 
 
