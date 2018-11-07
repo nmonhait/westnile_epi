@@ -12,3 +12,6 @@ the final version on the day of presentations.
 3. A presentation (12 minutes maximum) that covers the same material
 as the report. The groups will present these during finals week, in the
 time period scheduled for a final exam for our course.
+
+Data information:
+https://data.illinois.gov/dataset/1405to12_iquery_wnvdata
