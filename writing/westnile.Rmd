@@ -1,5 +1,5 @@
 ---
-title: "westnile_epi"
+title: "Exploring demographic trends of West Nile human cases in Illinois"
 author: "Nichole Monhait, Kathleen Wendt, Jessy Jiao, and Randy Xun"
 date: "12/3/2018"
 output: pdf_document
