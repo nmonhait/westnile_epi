@@ -1,0 +1,15 @@
+---
+title: "westnile_epi"
+author: "Nichole Monhait, Kathleen Wendt, Jessy Jiao, and Randy Xun"
+date: "12/3/2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+
+
