@@ -46,6 +46,38 @@ library(viridis)
 
 il_wvn <- read_csv("../data/data_il.csv")
 
+## Data will be made ready for pie charts
+##This is so I can get the denominator
+total_cases <- il_wvn %>% 
+  summarize(cases = sum(count))
+
+##This is for ethnicity comparison
+race_count <- il_wvn %>% 
+  filter(ethnicity %in% c("Hispanic or Latino", "NotHispNotLatino")) %>% 
+  group_by(ethnicity) %>% 
+  summarize(events = n(),
+            cases = sum(count))
+
+##This is for the age count
+age_count <- il_wvn %>% 
+  filter(agegroup != "na") %>% 
+  group_by(agegroup) %>% 
+  summarize(cases = sum(count))
+
+##This is for the year
+year_count <- il_wvn %>% 
+  filter(year != "na") %>% 
+  group_by(year) %>% 
+  summarize(cases = sum(count))
+
+##This is for state vs county
+area_count <- il_wvn %>% 
+  filter(stateorcounty != "na") %>% 
+  group_by(stateorcounty) %>% 
+  summarize(cases = sum(count))
+
+
+
 ```
 
 
