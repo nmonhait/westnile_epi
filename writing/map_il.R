@@ -17,3 +17,5 @@ il_skeleton <- il_counties %>%
 il <- leaflet(il_counties) %>%
   addProviderTiles("OpenStreetMap.BlackAndWhite") %>%  
   addPolygons(color = "black", weight = 1, fillOpacity = 0)
+
+
