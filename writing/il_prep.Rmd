@@ -1,5 +1,5 @@
 ---
-title: "Data and map"
+title: "Prepare data and map"
 author: "Nichole Monhait & Kathleen Wendt"
 date: "11/28/2018"
 output: html_document
