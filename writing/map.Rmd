@@ -1,6 +1,6 @@
 ---
 title: "Layering map"
-author: "Nichole Monhait"
+author: "Nichole Monhait & Kathleen Wendt"
 date: "11/28/2018"
 output: html_document
 ---
@@ -25,6 +25,7 @@ library(ggthemes)
 library(sf)
 library(leaflet)
 library(sp)
+library(readr)
 
 ```
 
@@ -32,6 +33,19 @@ library(sp)
 ```{r read data, echo = FALSE}
 
 il_wvn <- read_csv("../data/data_il.csv")
+
+```
+
+
+```{r join lat long with data}
+
+data_il <- read_csv("../data/data_il.csv") %>%
+  rename(NAME = il)
+
+il_counties_2 <- il_counties %>%
+  select(STATEFP, COUNTYFP, geometry, NAME)
+
+full_il <- inner_join(data_il, il_counties, by = "NAME")
 
 ```
 
@@ -47,6 +61,26 @@ il_skeleton <- il_counties %>%
   ggplot() +
   geom_sf(data = il_counties) 
 
+```
+
+
+```{r switch sf to sp}
+
+il_sp <- sf:::as_Spatial(il_counties)
+
+```
+
+
+
+```{r switch sf to sp in leaflet}
+
+il <- leaflet(il_sp) %>%
+  addPolygons() %>% 
+  # setView(lng = -89.3985, lat = 40.6331, zoom = 8) %>% 
+  addProviderTiles("OpenStreetMap.BlackAndWhite") # %>%  
+  # addPolygons(color = "black", weight = 1, fillOpacity = 0)
+
+il
 ```
 
 
