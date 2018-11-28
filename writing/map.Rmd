@@ -32,30 +32,33 @@ library(readr)
 
 ```{r read data, echo = FALSE}
 
-il_wvn <- read_csv("../data/data_il.csv")
+il_wnv <- read_csv("../data/data_il.csv") %>% 
+  rename(NAME = il) # to create joining variable (county name)
 
 ```
 
 
-```{r join lat long with data}
-
-data_il <- read_csv("../data/data_il.csv") %>%
-  rename(NAME = il)
-
-il_counties_2 <- il_counties %>%
-  select(STATEFP, COUNTYFP, geometry, NAME)
-
-full_il <- inner_join(data_il, il_counties, by = "NAME")
-
-```
-
-
-```{r bring in polygon info for IL}
+```{r create counties framework}
 
 # IL FIPS = 17
 il_counties <- counties(state = "IL", cb = TRUE, class = "sf") %>% 
   st_set_crs(NA) %>%
   st_set_crs(4326)
+
+```
+
+
+```{r join lat long with data}
+  
+il_counties_2 <- il_counties %>%
+  select(STATEFP, COUNTYFP, geometry, NAME)
+
+full_il <- inner_join(il_wnv, il_counties, by = "NAME")
+
+```
+
+
+```{r match IL polygon info to ggplot skeleton}
 
 il_skeleton <- il_counties %>% 
   ggplot() +
