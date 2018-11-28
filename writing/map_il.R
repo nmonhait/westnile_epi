@@ -18,6 +18,7 @@ il_skeleton <- il_counties %>%
 
 #leaflet package
 
+<<<<<<< HEAD
 il <- leaflet() %>%
   addPolygons(data = il_sp) %>% 
   addProviderTiles("OpenStreetMap.BlackAndWhite") 
@@ -35,3 +36,12 @@ il_counties_2 <- il_counties %>%
   select(STATEFP, COUNTYFP, geometry, NAME) 
 
 full_il <- inner_join(data_il, il_counties, by = "NAME")
+=======
+il <- leaflet(il_counties) %>%
+  setView(lng = -89.3985, lat = 40.6331, zoom = 8) %>% 
+  addProviderTiles("OpenStreetMap.BlackAndWhite") %>%  
+  addPolygons(color = "black", weight = 1, fillOpacity = 0)
+
+il
+
+>>>>>>> eabc2323fb179ca2081ee8ca333109a9476f1a17
