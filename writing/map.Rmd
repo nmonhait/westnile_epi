@@ -9,6 +9,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+
+
 ```{r}
 library(tidyverse)
 library(tigris)
@@ -16,6 +19,9 @@ library(ggplot2)
 library(ggthemes)
 library(sf)
 library(leaflet)
+library(sp)
+
+
 #bring in polgyon info for IL counties
 #IL FIPS = 17
 il_counties <- counties(state = "IL", cb = TRUE, class = "sf") %>% 
@@ -36,7 +42,6 @@ il <- leaflet(il_counties) %>%
 il
 ```
 
-```{r}
 
-```
+
 

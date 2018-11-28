@@ -1,3 +1,6 @@
+
+# load libraries
+
 library(tidyverse)
 library(tigris)
 library(ggplot2)
@@ -5,8 +8,11 @@ library(ggthemes)
 library(sf)
 library(leaflet)
 library(sp)
-#bring in polgyon info for IL counties
-#IL FIPS = 17
+
+
+# bring in polgyon info for IL counties
+
+# IL FIPS = 17
 il_counties <- counties(state = "IL", cb = TRUE, class = "sf") %>% 
   st_set_crs(NA) %>% 
   st_set_crs(4326)
