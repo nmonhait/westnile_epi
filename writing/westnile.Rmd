@@ -1,7 +1,7 @@
 ---
 title: "Exploring demographic trends of West Nile human cases in Illinois"
 author: "Nichole Monhait, Kathleen Wendt, Jessy Jiao, and Randy Xun"
-date: "12/3/2018"
+date: "12/7/2018"
 output:
   html_document:
     df_print: paged
@@ -13,22 +13,13 @@ knitr::opts_chunk$set(fig.width=5, fig.height=4, fig.path='figs/',
 ```
 
 
-```{r packages, echo = FALSE}
+```{r packages, echo = FALSE, warning = FALSE}
 
 library(dplyr)
-library(broom)
-library(assertive)
 library(tidyverse)
-library(stringi)
-library(stringr)
 library(readr)
 library(ggplot2)
-library(gridExtra)
 library(ggthemes)
-library(dlnm)
-library(pander)
-library(tikzDevice)
-library(packrat)
 library(knitr)
 library(xtable)
 library(tinytex)
@@ -38,22 +29,26 @@ library(kableExtra)
 library(lubridate)
 library(forcats)
 library(devtools)
-library(plotflow)
-library(scales)
-library(viridis)
+
 ```
 
 
-```{r read and clean data}
+```{r read data}
 
 il_wvn <- read_csv("../data/data_il.csv")
 
-## Data will be made ready for pie charts
-##This is so I can get the denominator
+```
+
+
+
+```{r summarize data}
+
+# Data will be made ready for pie charts
+# This is so I can get the denominator
 total_cases <- il_wvn %>% 
   summarize(cases = sum(count))
 
-##This is for ethnicity comparison
+# This is for ethnicity comparison
 race_count <- il_wvn %>% 
   filter(ethnicity %in% c("Hispanic or Latino", "NotHispNotLatino")) %>% 
   group_by(ethnicity) %>% 
@@ -82,31 +77,6 @@ area_count <- il_wvn %>%
 
 ```
 
-```{r}
-library(tidyverse)
-library(tigris)
-library(ggplot2)
-library(ggthemes)
-library(sf)
-library(leaflet)
-#bring in polgyon info for IL counties
-#IL FIPS = 17
-il_counties <- counties(state = "IL", cb = TRUE, class = "sf") %>% 
-  st_set_crs(NA) %>% st_set_crs(4326)
 
-il_skeleton <- il_counties %>% 
-  ggplot() +
-  geom_sf(data = il_counties) 
-
-
-#leaflet package
-
-il <- leaflet(il_counties) %>%
-  setView(lng = -89.3985, lat = 40.6331, zoom = 8) %>% 
-  addProviderTiles("OpenStreetMap.BlackAndWhite") %>%  
-  addPolygons(color = "black", weight = 1, fillOpacity = 0)
-
-il
-```
 
 
