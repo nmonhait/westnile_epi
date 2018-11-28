@@ -20,3 +20,6 @@ il <- leaflet(il_counties) %>%
   setView(lng = -89.3985, lat = 40.6331, zoom = 8) %>% 
   addProviderTiles("OpenStreetMap.BlackAndWhite") %>%  
   addPolygons(color = "black", weight = 1, fillOpacity = 0)
+
+il
+
