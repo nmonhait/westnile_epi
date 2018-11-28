@@ -2,7 +2,9 @@
 title: "Exploring demographic trends of West Nile human cases in Illinois"
 author: "Nichole Monhait, Kathleen Wendt, Jessy Jiao, and Randy Xun"
 date: "12/3/2018"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r global_options, echo = FALSE}
@@ -12,7 +14,7 @@ knitr::opts_chunk$set(fig.width=5, fig.height=4, fig.path='figs/',
 
 
 ```{r packages, echo = FALSE}
-library(DT)
+
 library(dplyr)
 library(broom)
 library(assertive)
@@ -80,5 +82,31 @@ area_count <- il_wvn %>%
 
 ```
 
+```{r}
+library(tidyverse)
+library(tigris)
+library(ggplot2)
+library(ggthemes)
+library(sf)
+library(leaflet)
+#bring in polgyon info for IL counties
+#IL FIPS = 17
+il_counties <- counties(state = "IL", cb = TRUE, class = "sf") %>% 
+  st_set_crs(NA) %>% st_set_crs(4326)
+
+il_skeleton <- il_counties %>% 
+  ggplot() +
+  geom_sf(data = il_counties) 
+
+
+#leaflet package
+
+il <- leaflet(il_counties) %>%
+  setView(lng = -89.3985, lat = 40.6331, zoom = 8) %>% 
+  addProviderTiles("OpenStreetMap.BlackAndWhite") %>%  
+  addPolygons(color = "black", weight = 1, fillOpacity = 0)
+
+il
+```
 
 
