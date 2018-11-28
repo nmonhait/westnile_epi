@@ -2,7 +2,9 @@
 title: "Prepare data and map"
 author: "Nichole Monhait & Kathleen Wendt"
 date: "11/28/2018"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -105,7 +107,7 @@ il_skeleton <- il_counties %>%
 
 ```{r add leaflet}
 
-il <- leaflet(il_counties) %>%
+il <- leaflet(data = il_counties) %>%
   setView(lng = -89.3985, lat = 40.6331, zoom = 8) %>% 
   addProviderTiles("OpenStreetMap.BlackAndWhite") %>%  
   addPolygons(color = "black", weight = 1, fillOpacity = 0)
