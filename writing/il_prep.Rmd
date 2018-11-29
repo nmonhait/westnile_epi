@@ -2,9 +2,7 @@
 title: "Prepare data and map"
 author: "Nichole Monhait & Kathleen Wendt"
 date: "11/28/2018"
-output:
-  pdf_document: default
-  html_document: default
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -112,7 +110,6 @@ case_count_full <- full_il %>%
 
 ```{r add leaflet}
 
-<<<<<<< HEAD
 bins <- c(0, 10, 20, 50, 100, 200, 500, 1000, Inf)
 pal <- leaflet::colorFactor((viridis_pal(option = "inferno",
                                          begin = 1, end = 0.2)(4)), 
@@ -124,9 +121,6 @@ labels <- sprintf(
 ) %>% lapply(htmltools::HTML)
 
 il_cases <- leaflet(il_counties) %>%
-=======
-il <- leaflet(data = il_counties) %>%
->>>>>>> 7ded0faaf5e00bdaf76eeef330c2a774a7ec0664
   setView(lng = -89.3985, lat = 40.6331, zoom = 8) %>% 
   addProviderTiles("OpenStreetMap.BlackAndWhite") %>%  
   addPolygons(
@@ -151,13 +145,7 @@ il <- leaflet(data = il_counties) %>%
   
   il_cases
   
-
+#need to check geometry for location
 ```
-
-
-
-
-
-
 
 
