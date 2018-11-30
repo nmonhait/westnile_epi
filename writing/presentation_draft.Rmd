@@ -1,0 +1,126 @@
+---
+title: "Incidence of West Nile Virus in the State of Illinois 2005-2011"
+author: 'Human epidemiology group 1: Nicole, Kathleen, Randy, and Jessy'
+subtitle: Interactive Map and Shiny App
+output:
+  ioslides_presentation: default
+  beamer_presentation: default
+  always_allow_html: yes
+---
+
+```{r global_options, echo = FALSE, error = FALSE, warning = FALSE}
+knitr::opts_chunk$set(fig.width=5, fig.height=4, fig.path='figs/',
+                      warning=FALSE, message=FALSE, error=FALSE)
+```
+
+## Content
+
+- Data selection and clean up
+- The Creation of the West Nile Virus Interactive Map 
+- Interactive Shiny App
+- Conclusion
+
+## Introduction
+The primary goal of our project is to use epidemiological and demographic information, including age, gender, incident count, ethnicity, location, and race, to map the geographical WNV incidents in Illinois from 2005 to 2011.
+The importance of developing this interactive app and providing it to the public to help people become more aware of the incidents of WNV
+
+### Installation
+```{r load packages}
+library(tidyverse)
+library(tigris)
+library(ggplot2)
+library(ggthemes)
+library(sf)
+library(leaflet)
+library(sp)
+library(readr)
+```
+
+```{r read data, echo = FALSE}
+il_wnv <- read.csv(url("https://data.illinois.gov/dataset/6ff64c62-b424-44bc-8860-fefffd1dd191/resource/fb04f7ce-66bb-48a9-b463-d72a933dd9d4/download/data.csv")) %>% 
+  rename(NAME = il) # to create joining variable (county name)
+```
+
+## Data Selection & Clean ups
+We chose WNV data of Illinois, which contained information such as race, age, year, and location, that we hoped to integrate into our interactive map and app. 
+
+```{r Randy exploring data, include=FALSE, eval=FALSE}
+# Data will be made ready for pie charts
+# This is so I can get the denominator
+total_cases <- il_wnv %>% 
+  summarize(cases = sum(count))
+# ethnicity comparison
+race_count <- il_wnv %>% 
+  filter(ethnicity %in% c("Hispanic or Latino", "NotHispNotLatino")) %>% 
+  group_by(ethnicity) %>% 
+  summarize(events = n(),
+            cases = sum(count))
+# age count
+age_count <- il_wnv %>% 
+  filter(agegroup != "na") %>% 
+  group_by(agegroup) %>% 
+  summarize(cases = sum(count))
+# year
+year_count <- il_wnv %>% 
+  filter(year != "na") %>% 
+  group_by(year) %>% 
+  summarize(cases = sum(count))
+# state vs county
+area_count <- il_wnv %>% 
+  filter(stateorcounty != "na") %>% 
+  group_by(stateorcounty) %>% 
+  summarize(cases = sum(count))
+```
+
+## Creating the Map (1/4)
+
+First, created county framework
+```{r create counties framework, echo = TRUE, warning=FALSE}
+# IL FIPS = 17
+il_counties <- counties(state = "IL", cb = TRUE, class = "sf") %>% 
+  st_set_crs(NA) %>%
+  st_set_crs(4326)
+```
+## Creating the Map (2/4)
+
+Second, joined latitude and longitude with data
+```{r join lat long with data, echo = TRUE}
+  
+il_counties_2 <- il_counties %>%
+  select(STATEFP, COUNTYFP, geometry, NAME)
+full_il <- inner_join(il_wnv, il_counties, by = "NAME")
+```
+## Creating the Map (3/4)
+
+Third, joined illinois polygon information to the skeleton map
+```{r match IL polygon info to ggplot skeleton, echo = TRUE}
+il_skeleton <- il_counties %>% 
+  ggplot() +
+  geom_sf(data = il_counties) 
+```
+
+## Creating the Map (4/4)
+
+Add `leaflet` and markers
+
+We used `leaflet()` function to create a map wedget so that we can modify and add more features. We proceeded with `setView`, `addProviderTiles()`, and `addPolygons()` to set the center and zoom level of the map with added tile layers `OpenStreetMap` and county boundaries.
+
+## 
+#### **Incidence of West Nile Virus Map in Illinois, 2005-2012**
+```{r add leaflet}
+il <- leaflet(data = il_counties) %>%
+  setView(lng = -89.3985, lat = 40.6331, zoom = 8) %>% 
+  addProviderTiles("OpenStreetMap.BlackAndWhite") %>%  
+  addPolygons(color = "black", weight = 1, fillOpacity = 0)
+il
+```
+
+## Shiny App
+We created interactive web app from R.
+
+
+## Conclusion
+
+- help raise the awareness of WNV
+- visual interactive map and app help the general public to be more engaged in WNV prevention
+- R programming skills into practice
