@@ -2,7 +2,8 @@
 title: "Prepare data and map"
 author: "Nichole Monhait & Kathleen Wendt"
 date: "11/28/2018"
-output: html_document
+output:
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -16,7 +17,7 @@ knitr::opts_chunk$set(fig.width=5, fig.height=4, fig.path='figs/',
 ```
 
 
-```{r load packages, echo = FALSE}
+```{r load_packages, echo = FALSE}
 
 library(tidyverse)
 library(tigris)
@@ -31,16 +32,16 @@ library(viridis)
 ```
 
 
-```{r read data, echo = FALSE}
+```{r read_data, echo = FALSE}
 
-il_wnv <-read_csv("data/data_il.csv") %>% 
+il_wnv <-read_csv("../data/data_il.csv") %>% 
   subset(il != "IL") %>% #some values do not have county level data and are indicated as IL
   rename(NAME = il) 
 
 ```
 
 
-```{r Randy exploring data, include=FALSE, eval=FALSE}
+```{r Randy_exploring_data, include=FALSE, eval=FALSE}
 
 # Data will be made ready for pie charts
 # This is so I can get the denominator
@@ -75,7 +76,7 @@ area_count <- il_wnv %>%
 ```
 
 
-```{r create counties framework}
+```{r create_counties_framework}
 
 # IL FIPS = 17
 
@@ -86,14 +87,14 @@ il_counties <- counties(state = "IL", cb = TRUE, class = "sf") %>%
 ```
 
 
-```{r join lat long with data}
+```{r join_lat_long_data}
 
 full_il <- inner_join(il_wnv, il_counties, by = "NAME")
 
 ```
 
 
-```{r match IL polygon info to ggplot skeleton}
+```{r match_IL_polygon_ggplot_skeleton}
 
 il_skeleton <- il_counties %>% 
   ggplot() +
@@ -101,14 +102,15 @@ il_skeleton <- il_counties %>%
 
 ```
 
-```{r df for count data}
+
+```{r df_count}
 case_count_full <- full_il %>% 
   group_by(NAME) %>% 
   count()
 ```
 
 
-```{r add leaflet}
+```{r add_leaflet}
 
 bins <- c(0, 10, 20, 50, 100, 200, 500, 1000, Inf)
 pal <- leaflet::colorFactor((viridis_pal(option = "inferno",
@@ -143,9 +145,47 @@ il_cases <- leaflet(il_counties) %>%
       direction = "auto")) 
 
   
-  il_cases
+il_cases
   
 #need to check geometry for location
 ```
+
+
+```{r leaflet_test}
+
+example_data <- data_frame(lng = c(174.768, 174), 
+                           lat = c(-36.852, 36), 
+                           popup = c("Test", "The birthplace of R"))
+
+leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(data = example_data)
+
+leaflet() %>% addTiles() %>%
+  addRectangles(
+    lng1=-118.456554, lat1=34.078039,
+    lng2=-118.436383, lat2=34.062717,
+    fillColor = "transparent"
+  )
+
+library(rgdal)
+
+# From https://www.census.gov/geo/maps-data/data/cbf/cbf_state.html
+states <- readOGR("../data/cb_2013_us_state_20m/cb_2013_us_state_20m.shp",
+  layer = "cb_2013_us_state_20m", GDAL1_integer64_policy = TRUE)
+
+neStates <- subset(states, states$STUSPS %in% c(
+  "CT","ME","MA","NH","RI","VT","NY","NJ","PA"
+))
+
+leaflet(neStates) %>%
+  addPolygons(color = "#444444", weight = 1, smoothFactor = 0.5,
+    opacity = 1.0, fillOpacity = 0.5,
+    fillColor = ~colorQuantile("YlOrRd", ALAND)(ALAND),
+    highlightOptions = highlightOptions(color = "white", weight = 2,
+      bringToFront = TRUE))
+
+```
+
 
 
