@@ -151,41 +151,5 @@ il_cases
 ```
 
 
-```{r leaflet_test}
-
-example_data <- data_frame(lng = c(174.768, 174), 
-                           lat = c(-36.852, 36), 
-                           popup = c("Test", "The birthplace of R"))
-
-leaflet() %>% 
-  addTiles() %>% 
-  addMarkers(data = example_data)
-
-leaflet() %>% addTiles() %>%
-  addRectangles(
-    lng1=-118.456554, lat1=34.078039,
-    lng2=-118.436383, lat2=34.062717,
-    fillColor = "transparent"
-  )
-
-library(rgdal)
-
-# From https://www.census.gov/geo/maps-data/data/cbf/cbf_state.html
-states <- readOGR("../data/cb_2013_us_state_20m/cb_2013_us_state_20m.shp",
-  layer = "cb_2013_us_state_20m", GDAL1_integer64_policy = TRUE)
-
-neStates <- subset(states, states$STUSPS %in% c(
-  "CT","ME","MA","NH","RI","VT","NY","NJ","PA"
-))
-
-leaflet(neStates) %>%
-  addPolygons(color = "#444444", weight = 1, smoothFactor = 0.5,
-    opacity = 1.0, fillOpacity = 0.5,
-    fillColor = ~colorQuantile("YlOrRd", ALAND)(ALAND),
-    highlightOptions = highlightOptions(color = "white", weight = 2,
-      bringToFront = TRUE))
-
-```
-
 
 
