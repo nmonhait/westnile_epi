@@ -102,6 +102,7 @@ il_skeleton <- il_counties %>%
 
 ```
 
+
 ```{r df for count data}
 case_count_full <- full_il %>% 
   group_by(NAME) %>% 
@@ -144,7 +145,7 @@ il_cases <- leaflet(il_counties) %>%
       direction = "auto")) 
 
   
-  il_cases
+il_cases
   
 #need to check geometry for location
 ```
