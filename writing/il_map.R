@@ -11,8 +11,13 @@ library(viridis)
 library(dplyr)
 library(stringr)
 
+<<<<<<< HEAD
 # West nile df with location counts for map
 il_wnv <-read_csv("data/data_il.csv") %>% 
+=======
+# West nile df
+il_wnv <- read_csv("data/data_il.csv") %>% 
+>>>>>>> 2867f24660c47e15c176cb716163a08107a4a422
   subset(il != "IL") %>% #some values do not have county level data and are indicated as IL
   rename(NAME = il) %>% 
   group_by(NAME) %>% 
