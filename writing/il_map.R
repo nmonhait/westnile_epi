@@ -11,7 +11,7 @@ library(viridis)
 library(dplyr)
 
 # West nile df
-il_wnv <-read_csv("data/data_il.csv") %>% 
+il_wnv <- read_csv("data/data_il.csv") %>% 
   subset(il != "IL") %>% #some values do not have county level data and are indicated as IL
   rename(NAME = il) %>% 
   group_by(NAME) %>% 
