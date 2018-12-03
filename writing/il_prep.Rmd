@@ -1,0 +1,155 @@
+---
+title: "Prepare data and map"
+author: "Nichole Monhait & Kathleen Wendt"
+date: "11/28/2018"
+output:
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r global_options, echo = FALSE}
+knitr::opts_chunk$set(fig.width=5, fig.height=4, fig.path='figs/',
+                      warning=FALSE, message=FALSE, error=FALSE)
+```
+
+
+```{r load_packages, echo = FALSE}
+
+library(tidyverse)
+library(tigris)
+library(ggplot2)
+library(ggthemes)
+library(sf)
+library(leaflet)
+library(sp)
+library(readr)
+library(viridis)
+
+```
+
+
+```{r read_data, echo = FALSE}
+
+il_wnv <-read_csv("../data/data_il.csv") %>% 
+  subset(il != "IL") %>% #some values do not have county level data and are indicated as IL
+  rename(NAME = il) 
+
+```
+
+
+```{r Randy_exploring_data, include=FALSE, eval=FALSE}
+
+# Data will be made ready for pie charts
+# This is so I can get the denominator
+total_cases <- il_wnv %>% 
+  summarize(cases = sum(count))
+
+# ethnicity comparison
+race_count <- il_wnv %>% 
+  filter(ethnicity %in% c("Hispanic or Latino", "NotHispNotLatino")) %>% 
+  group_by(ethnicity) %>% 
+  summarize(events = n(),
+            cases = sum(count))
+
+# age count
+age_count <- il_wnv %>% 
+  filter(agegroup != "na") %>% 
+  group_by(agegroup) %>% 
+  summarize(cases = sum(count))
+
+# year
+year_count <- il_wnv %>% 
+  filter(year != "na") %>% 
+  group_by(year) %>% 
+  summarize(cases = sum(count))
+
+# state vs county
+area_count <- il_wnv %>% 
+  filter(stateorcounty != "na") %>% 
+  group_by(stateorcounty) %>% 
+  summarize(cases = sum(count))
+
+```
+
+
+```{r create_counties_framework}
+
+# IL FIPS = 17
+
+il_counties <- counties(state = "IL", cb = TRUE, class = "sf") %>% 
+  st_set_crs(NA) %>%
+  st_set_crs(4326)
+
+```
+
+
+```{r join_lat_long_data}
+
+full_il <- inner_join(il_wnv, il_counties, by = "NAME")
+
+```
+
+
+```{r match_IL_polygon_ggplot_skeleton}
+
+il_skeleton <- il_counties %>% 
+  ggplot() +
+  geom_sf(data = il_counties) 
+
+```
+
+
+```{r df_count}
+case_count_full <- full_il %>% 
+  group_by(NAME) %>% 
+  count()
+```
+
+
+```{r add_leaflet}
+
+bins <- c(0, 10, 20, 50, 100, 200, 500, 1000, Inf)
+pal <- leaflet::colorFactor((viridis_pal(option = "inferno",
+                                         begin = 1, end = 0.2)(4)), 
+                            domain = case_count_full$n)
+
+labels <- sprintf(
+  "<strong>%s</strong><br/>%g cases <sup></sup>",
+  case_count_full$NAME, case_count_full$n
+) %>% lapply(htmltools::HTML)
+
+il_cases <- leaflet(il_counties) %>%
+  setView(lng = -89.3985, lat = 40.6331, zoom = 8) %>% 
+  addProviderTiles("OpenStreetMap.BlackAndWhite") %>%  
+  addPolygons(
+    fillColor = ~pal(case_count_full$n),
+    weight = 2,
+    opacity = 1,
+    color = "white",
+    dashArray = "3",
+    fillOpacity = 0.7,
+    highlight = highlightOptions(
+      weight = 5,
+      color = "#666",
+      dashArray = "",
+      fillOpacity = 0.7,
+      bringToFront = TRUE),
+    label = labels,
+    labelOptions = labelOptions(
+      style = list("font-weight" = "normal", padding = "3px 8px"),
+      textsize = "15px",
+      direction = "auto")) 
+
+  
+il_cases
+  
+#need to check geometry for location
+```
+
+
+
+
