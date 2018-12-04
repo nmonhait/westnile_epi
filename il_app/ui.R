@@ -1,5 +1,7 @@
 # Illinois WNV interactive map
 
+# questions for Nichole: drop down vs checks; labels match data
+
 # load libraries
 
 library(shinydashboard)
@@ -14,30 +16,41 @@ library(ggmap)
 
 # source("writing/il_map.R")
 
-shinyUI(dashboardPage(
-  
+shinyUI(dashboardPage( # create shiny dashboard fluid page
+  # header and structure of shiny dashboard
   dashboardHeader(title = "Demographic patterns of West Nile Virus in Illinois,
                   2005 - 2012",
                   titleWidth = 1000),
   dashboardSidebar(disable = TRUE),
   dashboardBody(
     fluidRow(
-      column(width = 7,
+      column(width = 7, # map widget
              box(width = NULL,
-                 leafletOutput("map", height = 400))),
+                 leafletOutput("map", height = 400))), 
+      column(width = 5, # year slider widget
+             box(width = NULL,
+                 sliderInput(inputId = "year",
+                             label = "Select the year(s): ",
+                             value = as.Date("2005-01-01"), 
+                             min = as.Date("2005-01-01"),
+                             max = as.Date("2012-12-31"),
+                             ticks = TRUE,
+                             animate = TRUE, 
+                             animationOptions(interval = 1)))
+                 ),
       column(width = 5,
              box(width = NULL,
-                 checkboxGroupInput(inputId = "gender",
+                 checkboxGroupInput(inputId = "gender", # gender widget
                              label = "Filter based on patient gender: ",
                              choices = c("Male", 
                                        "Female"),
                              selected =  c("Male", 
-                                           "Female"))
+                                           "Female")) 
              ),
-                 checkboxGroupInput(inputId = "race",
+                 checkboxGroupInput(inputId = "race", # race widget
                              label = "Filter based on patient race: ",
                              choices = c("White", 
-                                       "BlackAfricanAmerican", # same as data labels?
+                                       "BlackAfricanAmerican", # same as data labels? 
                                        "Asian",
                                        "Multiple Races",
                                        "Other",
@@ -49,9 +62,9 @@ shinyUI(dashboardPage(
                                           "Multiple Races",
                                           "Other",
                                           "Unknown",
-                                          "na"))
+                                          "na")) 
              ),
-                checkboxGroupInput(inputId = "age",
+                checkboxGroupInput(inputId = "age", # age widget
                             label = "Filter based on patient age group: ",
                             choices = c("0-4 Years",
                                         "5-9 Years",
