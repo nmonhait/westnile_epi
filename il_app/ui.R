@@ -31,24 +31,26 @@ shinyUI(dashboardPage( # create shiny dashboard fluid page
              box(width = NULL,
                  sliderInput(inputId = "year",
                              label = "Select the year(s): ",
-                             value = as.Date("2005-01-01"), 
-                             min = as.Date("2005-01-01"),
-                             max = as.Date("2012-12-31"),
+                             value = c(2005, 2012), # not in date form
+                             min = 2005,
+                             max = 2012,
                              ticks = TRUE,
-                             animate = TRUE, 
-                             animationOptions(interval = 1)))
+                             animate = TRUE 
+                             #animationOptions(interval = 1)
+                             ))
                  ),
       column(width = 5,
              box(width = NULL,
                  checkboxGroupInput(inputId = "gender", # gender widget
-                             label = "Filter based on patient gender: ",
+                             label = "Select gender(s): ",
                              choices = c("Male", 
-                                       "Female"),
+                                       "Female",
+                                       "na"),
                              selected =  c("Male", 
                                            "Female")) 
              ),
                  checkboxGroupInput(inputId = "race", # race widget
-                             label = "Filter based on patient race: ",
+                             label = "Select race(s): ",
                              choices = c("White", 
                                        "BlackAfricanAmerican", # same as data labels? 
                                        "Asian",
@@ -60,12 +62,10 @@ shinyUI(dashboardPage( # create shiny dashboard fluid page
                                           "BlackAfricanAmerican", # same as data labels?
                                           "Asian",
                                           "Multiple Races",
-                                          "Other",
-                                          "Unknown",
-                                          "na")) 
+                                          "Other")) 
              ),
                 checkboxGroupInput(inputId = "age", # age widget
-                            label = "Filter based on patient age group: ",
+                            label = "Select age group(s): ",
                             choices = c("0-4 Years",
                                         "5-9 Years",
                                         "10-14 Years",
@@ -94,8 +94,7 @@ shinyUI(dashboardPage( # create shiny dashboard fluid page
                                          "50-54 Years",
                                          "55-59 Years",
                                          "60-64 Years",
-                                         "65 + Years",
-                                         "na"))
+                                         "65 + Years"))
       )
     ),
   skin = "blue"))
