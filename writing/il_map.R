@@ -10,10 +10,11 @@ library(readr)
 library(viridis)
 library(dplyr)
 library(stringr)
+library(janitor)
 
 # West nile df
 il_wnv <- read_csv("data/data_il.csv") %>% 
-  subset(il != "IL") %>% #some values do not have county level data and are indicated as IL
+  subset(il != "IL") %>% # some values do not have county level data and are indicated as IL
   rename(NAME = il) %>% 
   group_by(NAME) %>% 
   count() 
@@ -26,10 +27,10 @@ il_wnv$NAME <- sub("Mchenry", "McHenry", il_wnv$NAME)
 il_wnv$NAME <- sub("Mclean", "McLean", il_wnv$NAME)
 il_wnv$NAME <- sub("St Clair", "St. Clair", il_wnv$NAME)
 
-#demography df to join with county location
+# demography df to join with county location
 
 il_demog <-read_csv("data/data_il.csv") %>% 
-  subset(il != "IL") %>% #some values do not have county level data and are indicated as IL
+  subset(il != "IL") %>% # some values do not have county level data and are indicated as IL
   rename(NAME = il) %>% 
   select(year, agegroup, gender, race, NAME) %>% 
   arrange(NAME)
@@ -55,13 +56,13 @@ full_il <- full_join(il_wnv, il_counties, by = "NAME") %>%
   st_as_sf() %>% 
   select(NAME, geometry)
 
-#merge il_counties and il_demog for later use in function building
+# merge il_counties and il_demog for later use in function building
 il_demographic <- full_join(il_demog, il_counties, by = "NAME") %>% 
   group_by(NAME, gender, race, agegroup, year) %>% 
   ungroup() %>% 
   st_as_sf()
 
-#static outline with Il county shapes 
+# static outline with Il county shapes 
 
 il_skeleton <- il_counties %>% 
   ggplot() +
@@ -102,8 +103,8 @@ il_all <- leaflet(full_il) %>%
 
 il_all
 
-#filtered df for map functions to counts by group and county
-#race
+# filtered df for map functions to counts by group and county
+# race
 il_race <- il_demog %>% 
   arrange(NAME) %>% 
   group_by(NAME, race) %>% 
@@ -120,7 +121,7 @@ age_map <- leaflet(race_count) %>%
   setView(lng = -89.3985, lat = 40.6331, zoom = 8) %>% 
   addProviderTiles("OpenStreetMap.BlackAndWhite") %>%  
   addPolygons(
-    fillColor = ~pal(race_count$Asian),
+    fillColor = ~pal(race_count$Asian), # only selected for one race? add reactivity
     weight = 2,
     opacity = 1,
     color = "white",
@@ -138,8 +139,8 @@ age_map <- leaflet(race_count) %>%
       textsize = "15px",
       direction = "auto")) 
 
-#df for age group, first create df then spread so 1 row per county for merge 
-##with spatial info, place 0 for all NA
+# df for age group, first create df then spread so 1 row per county for merge 
+# with spatial info, place 0 for all NA
 
 il_age <- il_demog %>% 
   arrange(NAME) %>% 
@@ -148,7 +149,9 @@ il_age <- il_demog %>%
   ungroup()
 
 il_age <- il_age %>% 
-  spread(key = agegroup, value = n)
+  spread(key = agegroup, value = n) # %>% 
+  # clean_names() # %>% # must exclude 'NAME' from change
+  # rename_all(str_remove("x", "_")) broken code to remove 'x'
 
 age_count <-full_join(il_age, full_il, by = "NAME") %>% 
   st_as_sf()
@@ -157,7 +160,7 @@ age_map <- leaflet(age_count) %>%
   setView(lng = -89.3985, lat = 40.6331, zoom = 8) %>% 
   addProviderTiles("OpenStreetMap.BlackAndWhite") %>%  
   addPolygons(
-    fillColor = ~pal(age_count$n),
+    fillColor = ~pal(age_count$`10-14 Years`), # rename columns to clean code
     weight = 2,
     opacity = 1,
     color = "white",
@@ -175,8 +178,8 @@ age_map <- leaflet(age_count) %>%
       textsize = "15px",
       direction = "auto")) 
 
-#df for sex, first create df then spread so 1 row per county for merge 
-##with spatial info, place 0 for all NA
+# df for sex, first create df then spread so 1 row per county for merge 
+## with spatial info, place 0 for all NA
 
 il_sex <- il_demog %>% 
   arrange(NAME) %>% 
@@ -212,7 +215,7 @@ sex_map <- leaflet(sex_count) %>%
       textsize = "15px",
       direction = "auto")) 
 
-#FUNCTION for map outputs for different demographic indicators
+# FUNCTION for map outputs for different demographic indicators
 map_outputs <- function(df, demog) {
   map <- leaflet(df) %>%
     setView(lng = -89.3985, lat = 40.6331, zoom = 8) %>% 
@@ -241,5 +244,5 @@ map_outputs <- function(df, demog) {
 #function check:
 ## df options: sex_count, race_count, age_count
 ### demog options are all categories within each
-###add year filter
+### add year filter
 map_outputs(sex_count, sex_count$Female)
