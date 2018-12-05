@@ -174,7 +174,7 @@ age_map <- leaflet(age_count) %>%
   setView(lng = -89.3985, lat = 40.6331, zoom = 8) %>% 
   addProviderTiles("OpenStreetMap.BlackAndWhite") %>%  
   addPolygons(
-    fillColor = ~pal(age_count$`10-14 Years`), # rename columns to clean code
+    fillColor = ~pal(age_count$years1014), # rename columns to clean code
     weight = 2,
     opacity = 1,
     color = "white",
