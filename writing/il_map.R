@@ -166,9 +166,6 @@ il_age <- il_age %>%
   rename(years5559 = '55-59 Years') %>% 
   rename(years6064 = '60-64 Years') %>% 
   rename(years65 = '65 + Years') 
-  
-  # clean_names() # %>% # must exclude 'NAME' from change
-  # rename_all(str_remove("x", "_")) broken code to remove 'x'
 
 age_count <-full_join(il_age, full_il, by = "NAME") %>% 
   st_as_sf()
