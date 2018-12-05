@@ -179,12 +179,3 @@ map_outputs(sex_count, sex_count$Male)
 
 
 
-
-
-
-
-
-
-
-
-
