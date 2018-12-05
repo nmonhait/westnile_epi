@@ -15,3 +15,6 @@ time period scheduled for a final exam for our course.
 
 Data information:
 https://data.illinois.gov/dataset/1405to12_iquery_wnvdata
+
+Our Shiny is modeled after the one here:
+http://shiny.rstudio.com/gallery/superzip-example.html
