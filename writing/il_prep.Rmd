@@ -70,7 +70,8 @@ il_counties <- counties(state = "IL", cb = TRUE, class = "sf") %>%
   arrange(NAME)
 
 ```
-```{r merge with spatial, echo = FALSE}
+
+```{r merge_with_spatial, echo = FALSE}
 # merge il_wnv and il_counties for blank map highlighted by county name and boundary
 full_il <- full_join(il_wnv, il_counties, by = "NAME") %>% 
   group_by(NAME) %>% 
@@ -84,7 +85,8 @@ il_demographic <- full_join(il_demog, il_counties, by = "NAME") %>%
   ungroup() %>% 
   st_as_sf()
 ```
-```{r filtering for demog info, echo = FALSE}
+
+```{r filtering_for_demog_info, echo = FALSE}
 il_race <- il_demog %>% 
   arrange(NAME) %>% 
   group_by(NAME, race) %>% 
@@ -104,9 +106,7 @@ il_age <- il_demog %>%
   ungroup()
 
 il_age <- il_age %>% 
-  spread(key = agegroup, value = n) # %>% 
-  # clean_names() # %>% # must exclude 'NAME' from change
-  # rename_all(str_remove("x", "_")) broken code to remove 'x'
+  spread(key = agegroup, value = n) 
 
 age_count <-full_join(il_age, full_il, by = "NAME") %>% 
   st_as_sf()
@@ -137,41 +137,7 @@ year_count <-full_join(il_year, full_il, by = "NAME") %>%
 ```
 
 
-```{r Randy_exploring_data, include=FALSE, eval=FALSE}
-
-# Data will be made ready for pie charts
-# This is so I can get the denominator
-total_cases <- il_wnv %>% 
-  summarize(cases = sum(count))
-
-# ethnicity comparison
-race_count <- il_wnv %>% 
-  filter(ethnicity %in% c("Hispanic or Latino", "NotHispNotLatino")) %>% 
-  group_by(ethnicity) %>% 
-  summarize(events = n(),
-            cases = sum(count))
-
-# age count
-age_count <- il_wnv %>% 
-  filter(agegroup != "na") %>% 
-  group_by(agegroup) %>% 
-  summarize(cases = sum(count))
-
-# year
-year_count <- il_wnv %>% 
-  filter(year != "na") %>% 
-  group_by(year) %>% 
-  summarize(cases = sum(count))
-
-# state vs county
-area_count <- il_wnv %>% 
-  filter(stateorcounty != "na") %>% 
-  group_by(stateorcounty) %>% 
-  summarize(cases = sum(count))
-
-```
-
-```{r map function}
+```{r_map_function}
 map_outputs <- function(df, demog) {
   pal <- leaflet::colorFactor((viridis_pal(option = "inferno",
                                            begin = 1, end = 0.2)(4)), 
@@ -206,7 +172,8 @@ map_outputs <- function(df, demog) {
 }
 
 ```
-```{r function test}
+
+```{r_function_test}
 map_outputs(sex_count, sex_count$Male)
 ```
 
