@@ -70,7 +70,7 @@ shinyUI(dashboardPage(
                              value = c(2005, 2012), # not in date form
                              min = 2005,
                              max = 2012,
-                             format= "####",
+                             sep= "",
                              ticks = TRUE,
                              animate = FALSE 
                              #animationOptions(interval = 1) - use if in date form?
