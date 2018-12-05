@@ -166,9 +166,6 @@ il_age <- il_age %>%
   rename(years5559 = '55-59 Years') %>% 
   rename(years6064 = '60-64 Years') %>% 
   rename(years65 = '65 + Years') 
-  
-  # clean_names() # %>% # must exclude 'NAME' from change
-  # rename_all(str_remove("x", "_")) broken code to remove 'x'
 
 age_count <-full_join(il_age, full_il, by = "NAME") %>% 
   st_as_sf()
@@ -177,7 +174,7 @@ age_map <- leaflet(age_count) %>%
   setView(lng = -89.3985, lat = 40.6331, zoom = 8) %>% 
   addProviderTiles("OpenStreetMap.BlackAndWhite") %>%  
   addPolygons(
-    fillColor = ~pal(age_count$`10-14 Years`), # rename columns to clean code
+    fillColor = ~pal(age_count$years1014), # rename columns to clean code
     weight = 2,
     opacity = 1,
     color = "white",
@@ -233,7 +230,7 @@ sex_map <- leaflet(sex_count) %>%
       direction = "auto")) 
 
 
-#also facet counts per year
+# also facet counts per year
 il_year <- il_demog %>% 
   arrange(NAME) %>% 
   group_by(NAME, year) %>% 
