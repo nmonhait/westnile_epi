@@ -12,7 +12,7 @@ library(dplyr)
 library(stringr)
 
 
-# West nile df
+# West nile df, only used to create full_il df 
 il_wnv <- read_csv("data/data_il.csv") %>% 
   subset(il != "IL") %>% # some values do not have county level data and are indicated as IL
   rename(NAME = il) %>% 
@@ -27,8 +27,7 @@ il_wnv$NAME <- sub("Mchenry", "McHenry", il_wnv$NAME)
 il_wnv$NAME <- sub("Mclean", "McLean", il_wnv$NAME)
 il_wnv$NAME <- sub("St Clair", "St. Clair", il_wnv$NAME)
 
-# demography df to join with county location
-
+# demography df to join with county location, used to create function dfs
 il_demog <-read_csv("data/data_il.csv") %>% 
   subset(il != "IL") %>% # some values do not have county level data and are indicated as IL
   rename(NAME = il) %>% 
@@ -43,7 +42,7 @@ il_demog$NAME <- sub("Mchenry", "McHenry", il_demog$NAME)
 il_demog$NAME <- sub("Mclean", "McLean", il_demog$NAME)
 il_demog$NAME <- sub("St Clair", "St. Clair", il_demog$NAME)
 
-# Tigris IL df, arrange in alphabetical order
+# Tigris IL df, arrange in alphabetical order, used for spatial info
 il_counties <- counties(state = "IL", cb = TRUE, class = "sf") %>% 
   st_set_crs(NA) %>%
   st_set_crs(4326) %>% 
@@ -56,67 +55,70 @@ full_il <- full_join(il_wnv, il_counties, by = "NAME") %>%
   st_as_sf() %>% 
   select(NAME, geometry)
 
-
+#making separate df for race, gender, and agegroup which will all go into functions
 il_race <- il_demog %>% 
   arrange(NAME) %>% 
-  group_by(NAME, race) %>% 
+  group_by(NAME, race, year) %>% 
   count() %>% 
   ungroup()
 
-il_race <- il_race %>% 
-  spread(key = race, value = n)
+#function for age group filter
+race_fun <- function(year_choice) {
+  
+  r_count <- il_race %>% 
+    spread(key = year, value = n) %>% 
+    group_by(race) %>% 
+    select(year_choice, NAME) %>% 
+    spread(key = race, value = year_choice)
+  
+  race_count <-full_join(r_count, full_il, by = "NAME") %>% 
+    st_as_sf()
+  print(race_count)
+}
 
-race_count <-full_join(il_race, full_il, by = "NAME") %>% 
-  st_as_sf()
-
-# df for age group, first create df then spread so 1 row per county for merge 
-# with spatial info, place 0 for all NA
-
+# df for age group
 il_age <- il_demog %>% 
   arrange(NAME) %>% 
-  group_by(NAME, agegroup) %>% 
+  group_by(NAME, agegroup, year) %>% 
   count() %>% 
   ungroup()
 
-il_age <- il_age %>% 
-  spread(key = agegroup, value = n) # %>% 
-# clean_names() # %>% # must exclude 'NAME' from change
-# rename_all(str_remove("x", "_")) broken code to remove 'x'
+age_fun <- function(year_choice) {
+  
+  a_count <- il_age %>% 
+    spread(key = year, value = n) %>% 
+    group_by(agegroup) %>% 
+    select(year_choice, NAME) %>% 
+    spread(key = agegroup, value = year_choice)
+  
+  age_count <-full_join(a_count, full_il, by = "NAME") %>% 
+    st_as_sf()
+  print(age_count)
+}
 
-age_count <-full_join(il_age, full_il, by = "NAME") %>% 
-  st_as_sf()
-
-
-# df for sex, first create df then spread so 1 row per county for merge 
-## with spatial info, place 0 for all NA
-
+# df for sex
 il_sex <- il_demog %>% 
   arrange(NAME) %>% 
-  group_by(NAME, gender) %>% 
+  group_by(NAME, gender, year) %>% 
   count() %>% 
   ungroup()
 
-il_sex <- il_sex %>% 
-  spread(key = gender, value = n)
-
-sex_count <-full_join(il_sex, full_il, by = "NAME") %>% 
-  st_as_sf()
-
-
-#also facet counts per year
-il_year <- il_demog %>% 
-  arrange(NAME) %>% 
-  group_by(NAME, year) %>% 
-  count() %>% 
-  ungroup()
-
-il_year <- il_year %>% 
-  spread(key = year, value = n)
-
-year_count <-full_join(il_year, full_il, by = "NAME") %>% 
-  st_as_sf()
+sex_fun <- function(year_choice) {
+  
+  s_count <- il_sex %>% 
+    spread(key = year, value = n) %>% 
+    group_by(gender) %>% 
+    select(year_choice, NAME) %>% 
+    spread(key = gender, value = year_choice)
+  
+  sex_count <-full_join(s_count, full_il, by = "NAME") %>% 
+    st_as_sf()
+  print(sex_count)
+}
 
 # FUNCTION for map outputs for different demographic indicators
+##df race_count, sex_count, age_count filtered by year of interest
+###demog is subset of race, sex, age of interest
 
 map_outputs <- function(df, demog) {
   pal <- leaflet::colorFactor((viridis_pal(option = "inferno",
@@ -151,8 +153,12 @@ map_outputs <- function(df, demog) {
   print(map)
 }
 
-#function check:
-## df options: sex_count, race_count, age_count, year_count
-### demog options are all categories within each
+#function example: 
+##women in 2011
+w_2011 <- sex_fun(year_choice = '2011') 
+map_outputs(w_2011, w_2011$Female)
 
-map_outputs(year_count, year_count$'2005')
+##asians in 2010
+a_2010 <- race_fun(year_choice = '2010') 
+map_outputs(a_2010, a_2010$Asian)
+
