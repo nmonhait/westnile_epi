@@ -76,7 +76,7 @@ pal <- leaflet::colorFactor((viridis_pal(option = "inferno",
 
 labels <- sprintf(
   "<strong>%s</strong><br/> <sup></sup>",
-  full_il$NAME # case_count_full$n
+  df$demog
 ) %>% lapply(htmltools::HTML)
 
 il_all <- leaflet(full_il) %>%
@@ -117,7 +117,7 @@ il_race <- il_race %>%
 race_count <-full_join(il_race, full_il, by = "NAME") %>% 
   st_as_sf()
 
-age_map <- leaflet(race_count) %>%
+race_map <- leaflet(race_count) %>%
   setView(lng = -89.3985, lat = 40.6331, zoom = 8) %>% 
   addProviderTiles("OpenStreetMap.BlackAndWhite") %>%  
   addPolygons(
@@ -215,8 +215,30 @@ sex_map <- leaflet(sex_count) %>%
       textsize = "15px",
       direction = "auto")) 
 
+
+#also facet counts per year
+il_year <- il_demog %>% 
+  arrange(NAME) %>% 
+  group_by(NAME, year) %>% 
+  count() %>% 
+  ungroup()
+
+il_year <- il_year %>% 
+  spread(key = year, value = n)
+
+year_count <-full_join(il_year, full_il, by = "NAME") %>% 
+  st_as_sf()
+
 # FUNCTION for map outputs for different demographic indicators
+
 map_outputs <- function(df, demog) {
+  pal <- leaflet::colorFactor((viridis_pal(option = "inferno",
+                                           begin = 1, end = 0.2)(4)), 
+                              domain = demog)
+  labels <- paste0('<strong>', df$NAME, '</strong>',
+                   '<br/>', 'Count: ', '<strong>', demog, '</strong>', ' ') %>% 
+    lapply(htmltools::HTML)
+  
   map <- leaflet(df) %>%
     setView(lng = -89.3985, lat = 40.6331, zoom = 8) %>% 
     addProviderTiles("OpenStreetMap.BlackAndWhite") %>%  
@@ -237,12 +259,15 @@ map_outputs <- function(df, demog) {
       labelOptions = labelOptions(
         style = list("font-weight" = "normal", padding = "3px 8px"),
         textsize = "15px",
-        direction = "auto")) 
+        direction = "auto"))
+      
   print(map)
 }
 
 #function check:
-## df options: sex_count, race_count, age_count
+## df options: sex_count, race_count, age_count, year_count
 ### demog options are all categories within each
-### add year filter
-map_outputs(sex_count, sex_count$Female)
+
+map_outputs(year_count, year_count$'2005')
+
+
