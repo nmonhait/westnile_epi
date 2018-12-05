@@ -216,7 +216,7 @@ sex_map <- leaflet(sex_count) %>%
       direction = "auto")) 
 
 
-#also facet counts per year
+# also facet counts per year
 il_year <- il_demog %>% 
   arrange(NAME) %>% 
   group_by(NAME, year) %>% 
