@@ -215,7 +215,7 @@ sex_map <- leaflet(sex_count) %>%
       textsize = "15px",
       direction = "auto")) 
 
-<<<<<<< HEAD
+
 #also facet counts per year
 il_year <- il_demog %>% 
   arrange(NAME) %>% 
@@ -229,10 +229,8 @@ il_year <- il_year %>%
 year_count <-full_join(il_year, full_il, by = "NAME") %>% 
   st_as_sf()
 
-#FUNCTION for map outputs for different demographic indicators
-=======
 # FUNCTION for map outputs for different demographic indicators
->>>>>>> aa1ab48863813077718eb6c3c7c92fac49b25cf9
+
 map_outputs <- function(df, demog) {
   pal <- leaflet::colorFactor((viridis_pal(option = "inferno",
                                            begin = 1, end = 0.2)(4)), 
@@ -269,11 +267,7 @@ map_outputs <- function(df, demog) {
 #function check:
 ## df options: sex_count, race_count, age_count, year_count
 ### demog options are all categories within each
-<<<<<<< HEAD
-###add year filter
+
 map_outputs(year_count, year_count$'2005')
 
-=======
-### add year filter
-map_outputs(sex_count, sex_count$Female)
->>>>>>> aa1ab48863813077718eb6c3c7c92fac49b25cf9
+
