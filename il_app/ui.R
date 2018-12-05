@@ -10,6 +10,8 @@ library(DT)
 library(ggplot2)
 library(ggmap)
 
+# source helper file
+# source("il_app/helper.R")
 
 shinyUI(dashboardPage(
   dashboardHeader(title = "Demographic patterns of West Nile Virus in Illinois,
@@ -47,20 +49,20 @@ shinyUI(dashboardPage(
              fluidRow(width = NULL,
                 selectizeInput(inputId = "age", # age widget
                             label = "Select age group(s): ",
-                            choices = c("0-4 Years",
-                                        "5-9 Years",
-                                        "10-14 Years",
-                                        "15-19 Years",
-                                        "20-24 Years",
-                                        "25-29 Years",
-                                        "30-34 Years",
-                                        "35-39 Years",
-                                        "40-44 Years",
-                                        "45-49 Years",
-                                        "50-54 Years",
-                                        "55-59 Years",
-                                        "60-64 Years",
-                                        "65 + Years"),
+                            choices = c("years04",
+                                        "years59", 
+                                        "years1014",
+                                        "years1519",
+                                        "years2024",
+                                        "years2529",
+                                        "years3034",
+                                        "years3539",
+                                        "years4044",
+                                        "years4549",
+                                        "years5054",
+                                        "years5559",
+                                        "years6064",
+                                        "years65",
                             multiple = TRUE))
     )),
       column(width = 12,
@@ -74,5 +76,5 @@ shinyUI(dashboardPage(
                              ticks = TRUE
                            ))
                  ),
-  skin = "navy")))
+  skin = "navy"))))
   
