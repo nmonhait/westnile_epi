@@ -10,7 +10,7 @@ library(readr)
 library(viridis)
 library(dplyr)
 library(stringr)
-library(janitor)
+
 
 # West nile df
 il_wnv <- read_csv("data/data_il.csv") %>% 
