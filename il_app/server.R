@@ -42,7 +42,7 @@ server <- function(input, output, session) {
   
   # Reactive expression for the data subsetted to what the user selected
   filteredData <- reactive({
-    quakes[quakes$mag >= input$range[1] & quakes$mag <= input$range[2],]
+    illinois[illinois$year >= input$year[1] & illinois$year <= input$year[2],] # what do 1 and 2 mean here? 
   })
   
   # This reactive expression represents the palette function,
