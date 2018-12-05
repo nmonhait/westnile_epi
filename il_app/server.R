@@ -1,13 +1,17 @@
-#
-# This is the server logic of a Shiny web application. You can run the 
-# application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-# 
-#    http://shiny.rstudio.com/
-#
+# server file of Illinois WNV interactive app
 
+# load libraries
+
+library(shinydashboard)
 library(shiny)
+library(dplyr)
+library(leaflet)
+library(DT)
+library(ggplot2)
+library(ggmap)
+library(BH)
+library(ggthemes)
+library(scales)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {

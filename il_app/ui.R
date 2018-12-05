@@ -1,4 +1,4 @@
-# Illinois WNV interactive map
+# user interface of Illinois WNV interactive app
 
 # load libraries
 
@@ -19,7 +19,7 @@ shinyUI(dashboardPage(
   dashboardBody(
     fluidRow(
       column(7, 
-           box(width = NULL, offset = 5,
+           box(width = NULL, offset = 0,
                leafletOutput("map", height = 400))),
       column(width = 4, offset = 0,
              fluidRow(width = NULL,
@@ -65,15 +65,13 @@ shinyUI(dashboardPage(
     )),
       column(width = 12,
              box(width = 12,
-                 sliderInput(inputId = "year",
+                 sliderInput(inputId = "year", # year widget
                              label = "Select the year(s): ",
-                             value = c(2005, 2012), # not in date form
+                             value = c(2005, 2012), 
                              min = 2005,
                              max = 2012,
-                             sep= "",
-                             ticks = TRUE,
-                             animate = FALSE 
-                             #animationOptions(interval = 1) - use if in date form?
+                             sep = "",
+                             ticks = TRUE
                            ))
                  ),
   skin = "navy")))
