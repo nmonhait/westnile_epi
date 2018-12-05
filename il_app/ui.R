@@ -18,30 +18,20 @@ shinyUI(dashboardPage(
   dashboardSidebar(disable = TRUE),
   dashboardBody(
     fluidRow(
-      column(width = 7, 
-             box(width = NULL,
-                 leafletOutput("map", height = 500))),
-      column(width = 10,
-             box(width = 10,
-                 sliderInput(inputId = "year",
-                             label = "Select the year(s): ",
-                             value = c(2005, 2012), # not in date form
-                             min = 2005,
-                             max = 2012,
-                             ticks = TRUE,
-                             animate = TRUE 
-                             #animationOptions(interval = 1) - use if in date form?
-                             ))
-                 ),
-      column(width = 7,
-             box(width = 7,
+      column(7, 
+           box(width = NULL, offset = 5,
+               leafletOutput("map", height = 400))),
+      column(width = 4, offset = 0,
+             fluidRow(width = NULL,
                  selectizeInput(inputId = "gender", # gender widget
                              label = "Select gender(s): ",
                              choices = c("Male", 
                                        "Female",
                                        "na"),
                              multiple = TRUE) 
-             ),
+             )),
+      column(width = 4, offset = 0,
+             fluidRow(width = NULL,
                  selectizeInput(inputId = "race", # race widget
                              label = "Select race(s): ",
                              choices = c("White", 
@@ -52,7 +42,9 @@ shinyUI(dashboardPage(
                                          "Unknown",
                                          "na"),
                              multiple = TRUE)
-             ),
+             )),
+      column(width = 4, offset = 0,
+             fluidRow(width = NULL,
                 selectizeInput(inputId = "age", # age widget
                             label = "Select age group(s): ",
                             choices = c("0-4 Years",
@@ -70,6 +62,19 @@ shinyUI(dashboardPage(
                                         "60-64 Years",
                                         "65 + Years"),
                             multiple = TRUE))
-    ),
-  skin = "purple"))
+    )),
+      column(width = 12,
+             box(width = 12,
+                 sliderInput(inputId = "year",
+                             label = "Select the year(s): ",
+                             value = c(2005, 2012), # not in date form
+                             min = 2005,
+                             max = 2012,
+                             format= "####",
+                             ticks = TRUE,
+                             animate = FALSE 
+                             #animationOptions(interval = 1) - use if in date form?
+                           ))
+                 ),
+  skin = "navy")))
   
