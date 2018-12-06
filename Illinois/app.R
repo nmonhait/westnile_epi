@@ -27,7 +27,7 @@ ui <- dashboardPage(
                  leafletOutput("map", height = 500))), 
       column(width = 4, offset = 0,
              fluidRow(width = NULL, # sex widget
-                      radioButtons("demo", label = "Choose gender",
+                      radioButtons("sex", label = "Choose gender",
                                    choiceNames = list(
                                      HTML("<b> Gender: </b> Male"), 
                                      HTML("<b> Gender: </b> Female")
@@ -78,11 +78,25 @@ server <- function (input, output, session) {
           fillOpacity = 0.7,
           bringToFront = TRUE))
   })
-  
+  observe({
+    
+    year <- input$year
+    sex <- input$sex
+    
+    sites <- pollen_subset %>% 
+      filter(findInterval(pollen_subset$Age, c(age - 250, age + 250)) == 1 &
+               pollen_subset$Taxon %in% taxon)
+    
+    leafletProxy("map") %>% 
+      clearMarkers() %>% 
+      addCircleMarkers(lng = sites$Longitude,
+                       lat = sites$Latitude,
+                       opacity = sites$Pct)
+  })
   # reactive expression for year slider
   ## observe() ?
   
-  # reactive expression for one-option widget (demo)
+  # reactive expression for sex widget
   ## leafletProxy()
   
 }
