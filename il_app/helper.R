@@ -2,7 +2,7 @@
 
 
 ########################## LOAD LIBRARIES ##############################
-# load required libraries 
+
 library(tidyverse)
 library(tigris)
 library(ggplot2)
@@ -14,6 +14,12 @@ library(readr)
 library(viridis)
 library(dplyr)
 library(stringr)
+library(shinydashboard)
+library(shiny)
+library(DT)
+library(ggmap)
+library(scales)
+library(RColorBrewer)
 
 
 ############################ PREPARE RAW DATA #################################

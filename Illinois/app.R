@@ -1,20 +1,6 @@
 ############################ ILLINOIS SHINY APP #############################
 
 
-######### LOAD LIBRARIES ########
-
-library(shinydashboard)
-library(shiny)
-library(dplyr)
-library(leaflet)
-library(DT)
-library(ggplot2)
-library(ggmap)
-library(BH)
-library(ggthemes)
-library(scales)
-library(RColorBrewer)
-
 
 ####################### SOURCE HELPER FILE #########################
 
