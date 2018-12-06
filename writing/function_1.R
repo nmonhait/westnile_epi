@@ -1,3 +1,7 @@
+################## HELPER FILE FOR ILLINOIS SHINY APP ##################
+
+
+########################## LOAD LIBRARIES ##############################
 # load required libraries 
 library(tidyverse)
 library(tigris)
@@ -11,6 +15,10 @@ library(viridis)
 library(dplyr)
 library(stringr)
 
+
+############################ PREPARE RAW DATA #################################
+
+########### COUNTY-LEVEL WEST NILE VIRUS COUNTS ############
 
 # West nile df, only used to create full_il df 
 # county counts from full data set 
@@ -29,7 +37,7 @@ il_wnv$NAME <- sub("Mclean", "McLean", il_wnv$NAME)
 il_wnv$NAME <- sub("St Clair", "St. Clair", il_wnv$NAME)
 
 
-
+############ DEMOGRAPHIC DATA BY CASE #############
 
 # demographics from full data set
 # demography df to join with county location, used to create function dfs
@@ -48,6 +56,7 @@ il_demog$NAME <- sub("Mclean", "McLean", il_demog$NAME)
 il_demog$NAME <- sub("St Clair", "St. Clair", il_demog$NAME)
 
 
+############# SPATIAL DATA PER COUNTY #############
 
 
 # spatial information to be connected by county
@@ -58,6 +67,7 @@ il_counties <- counties(state = "IL", cb = TRUE, class = "sf") %>%
   arrange(NAME)
 
 
+######## MERGE COUNTY COUNT WITH SPATIAL DATA #####
 
 # merge county count df with spatial df for blank map
 # merge il_wnv and il_counties for blank map highlighted by county name and boundary
@@ -69,15 +79,24 @@ full_il <- full_join(il_wnv, il_counties, by = "NAME") %>%
 
 
 
+##############################################################################
 
+
+
+################# MAKE DFs PER FILTER OPTION (year, sex/age/race) ######
 
 
 # making separate df for race, gender, and agegroup which will all go into functions
+
+#################### RACE DF AND FILTER FUNCTION #####################
+
+# df for race 
 il_race <- il_demog %>% 
   arrange(NAME) %>% 
   group_by(NAME, race, year) %>% 
   count() %>% 
   ungroup()
+
 
 # function for race filter
 race_fun <- function(year_choice) {
@@ -94,7 +113,7 @@ race_fun <- function(year_choice) {
 }
 
 
-
+#################### AGE GROUP DF AND FILTER FUNCTION ################
 
 # df for age group
 il_age <- il_demog %>% 
@@ -118,6 +137,8 @@ age_fun <- function(year_choice) {
 }
 
 
+
+################### SEX/GENDER DF AND FILTER FUNCTION ###################
 
 
 # df for sex
@@ -143,6 +164,7 @@ sex_fun <- function(year_choice) {
 }
 
 
+######################### MAP OUTPUT FUNCTION ############################
 
 # FUNCTION for map outputs for different demographic indicators
 ## df race_count, sex_count, age_count filtered by year of interest
@@ -182,7 +204,7 @@ map_outputs <- function(df, demog) {
 }
 
 
-
+############################ FUNCTION EXAMPLES ############################
 
 
 # function examples: 
