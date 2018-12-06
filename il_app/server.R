@@ -15,6 +15,7 @@ library(scales)
 library(RColorBrewer)
 
 ####################### SOURCE HELPER FILE #########################
+
 source("il_app/function_1.R")
 
 
@@ -46,7 +47,8 @@ server <- function(input, output, session) {
   
   # Reactive expression for the data subsetted to what the user selected
   filteredData <- reactive({
-    illinois[illinois$year >= input$year[1] & illinois$year <= input$year[2],] # what do 1 and 2 mean here? 
+    illinois[illinois$year >= input$year[1] & illinois$year <= input$year[2],] 
+    # what do 1 and 2 mean here? 
   })
   
   # This reactive expression represents the palette function,
