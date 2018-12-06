@@ -74,5 +74,5 @@ column(width = 11,
                        ticks = TRUE
            ))
 ),
-skin = "purple")))
+skin = "purple"))
 
