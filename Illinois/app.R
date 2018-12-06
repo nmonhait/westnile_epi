@@ -78,21 +78,21 @@ server <- function (input, output, session) {
           fillOpacity = 0.7,
           bringToFront = TRUE))
   })
-  observe({
-    
-    year <- input$year
-    sex <- input$sex
-    
-    sites <- pollen_subset %>% 
-      filter(findInterval(pollen_subset$Age, c(age - 250, age + 250)) == 1 &
-               pollen_subset$Taxon %in% taxon)
-    
-    leafletProxy("map") %>% 
-      clearMarkers() %>% 
-      addCircleMarkers(lng = sites$Longitude,
-                       lat = sites$Latitude,
-                       opacity = sites$Pct)
-  })
+  # observe({
+  #   
+  #   year <- input$year
+  #   sex <- input$sex
+  #   
+  #   sites <- pollen_subset %>% 
+  #     filter(findInterval(pollen_subset$Age, c(age - 250, age + 250)) == 1 &
+  #              pollen_subset$Taxon %in% taxon)
+  #   
+  #   leafletProxy("map") %>% 
+  #     clearMarkers() %>% 
+  #     addCircleMarkers(lng = sites$Longitude,
+  #                      lat = sites$Latitude,
+  #                      opacity = sites$Pct)
+  # })
   # reactive expression for year slider
   ## observe() ?
   
