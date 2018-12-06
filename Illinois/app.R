@@ -1,5 +1,4 @@
-################ USER INTERFACE FILE FOR ILLINOIS SHINY APP ################
-
+############################ ILLINOIS SHINY APP #############################
 
 
 ######### LOAD LIBRARIES ########
@@ -11,6 +10,16 @@ library(leaflet)
 library(DT)
 library(ggplot2)
 library(ggmap)
+library(BH)
+library(ggthemes)
+library(scales)
+library(RColorBrewer)
+
+
+####################### SOURCE HELPER FILE #########################
+
+
+source("helper.R")
 
 
 ############################# UI BODY CODE ################################
@@ -77,28 +86,10 @@ ui <- dashboardPage(
     skin = "purple"))
 
 
-################ SERVER FILE FOR ILLINOIS SHINY APP ################
 
 
-######### LOAD LIBRARIES ########
-
-library(shinydashboard)
-library(shiny)
-library(dplyr)
-library(leaflet)
-library(DT)
-library(ggplot2)
-library(ggmap)
-library(BH)
-library(ggthemes)
-library(scales)
-library(RColorBrewer)
 
 
-####################### SOURCE HELPER FILE #########################
-
-
-source("helper.R")
 
 
 
