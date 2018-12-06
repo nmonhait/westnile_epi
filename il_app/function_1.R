@@ -164,6 +164,44 @@ sex_fun <- function(year_choice) {
 }
 
 
+######################### PLOT MAP FUNCTION ##############################
+
+
+# interactive leaflet plot- BLANK
+bins <- c(0, 10, 20, 50, 100, 200, 500, 1000, Inf)
+pal <- leaflet::colorFactor((viridis_pal(option = "inferno",
+                                         begin = 1, end = 0.2)(4)), 
+                            domain = full_il$n)
+
+labels <- sprintf(
+  "<strong>%s</strong><br/> <sup></sup>",
+  df$demog
+) %>% lapply(htmltools::HTML)
+
+plot_map <- leaflet(full_il) %>%
+  setView(lng = -89.3985, lat = 40.6331, zoom = 8) %>% 
+  addProviderTiles("OpenStreetMap.BlackAndWhite") %>%  
+  addPolygons(
+    fillColor = "grey",
+    weight = 2,
+    opacity = 1,
+    color = "white",
+    dashArray = "3",
+    fillOpacity = 0.7,
+    highlight = highlightOptions(
+      weight = 5,
+      color = "#666",
+      dashArray = "",
+      fillOpacity = 0.7,
+      bringToFront = TRUE),
+    label = labels,
+    labelOptions = labelOptions(
+      style = list("font-weight" = "normal", padding = "3px 8px"),
+      textsize = "15px",
+      direction = "auto")) 
+
+
+
 ######################### MAP OUTPUT FUNCTION ############################
 
 # FUNCTION for map outputs for different demographic indicators
