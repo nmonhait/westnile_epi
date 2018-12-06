@@ -1,6 +1,6 @@
-# server file of Illinois WNV interactive app
+################ SERVER FILE FOR ILLINOIS SHINY APP ################
 
-# load libraries
+######### LOAD LIBRARIES ########
 
 library(shinydashboard)
 library(shiny)
@@ -14,9 +14,11 @@ library(ggthemes)
 library(scales)
 library(RColorBrewer)
 
-# source helper file
-# source("il_app/function_1.R")
+####################### SOURCE HELPER FILE #########################
+source("il_app/function_1.R")
 
+
+###################### UI EXAMPLE TO MATCH BELOW SERVER ################
 
 # ui <- bootstrapPage(
 #   tags$style(type = "text/css", "html, body {width:100%;height:100%}"),
@@ -37,6 +39,8 @@ library(RColorBrewer)
 #                               TRUE)
 #   )
 # )
+
+########################## SERVER BODY #############################
 
 server <- function(input, output, session) {
   
