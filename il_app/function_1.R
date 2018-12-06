@@ -168,17 +168,20 @@ sex_fun <- function(year_choice) {
 
 
 # interactive leaflet plot- BLANK
-bins <- c(0, 10, 20, 50, 100, 200, 500, 1000, Inf)
-pal <- leaflet::colorFactor((viridis_pal(option = "inferno",
-                                         begin = 1, end = 0.2)(4)), 
-                            domain = full_il$n)
 
-labels <- sprintf(
-  "<strong>%s</strong><br/> <sup></sup>",
-  df$demog
-) %>% lapply(htmltools::HTML)
 
-plot_map <- leaflet(full_il) %>%
+plot_map <- function(blank_map) {
+  bins <- c(0, 10, 20, 50, 100, 200, 500, 1000, Inf)
+  pal <- leaflet::colorFactor((viridis_pal(option = "inferno",
+                                           begin = 1, end = 0.2)(4)), 
+                              domain = full_il$n)
+  
+  labels <- sprintf(
+    "<strong>%s</strong><br/> <sup></sup>",
+    df$demog
+    ) %>% lapply(htmltools::HTML)
+  
+  map <- leaflet(full_il) %>% 
   setView(lng = -89.3985, lat = 40.6331, zoom = 8) %>% 
   addProviderTiles("OpenStreetMap.BlackAndWhite") %>%  
   addPolygons(
@@ -199,6 +202,8 @@ plot_map <- leaflet(full_il) %>%
       style = list("font-weight" = "normal", padding = "3px 8px"),
       textsize = "15px",
       direction = "auto")) 
+
+}
 
 
 
