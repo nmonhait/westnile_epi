@@ -86,8 +86,6 @@ full_il <- full_join(il_wnv, il_counties, by = "NAME") %>%
 ################# MAKE DFs PER FILTER OPTION (year, sex/age/race) ######
 
 
-# making separate df for race, gender, and agegroup which will all go into functions
-
 #################### RACE DF AND FILTER FUNCTION #####################
 
 # df for race 
@@ -96,7 +94,6 @@ il_race <- il_demog %>%
   group_by(NAME, race, year) %>% 
   count() %>% 
   ungroup()
-
 
 # function for race filter
 race_fun <- function(year_choice) {

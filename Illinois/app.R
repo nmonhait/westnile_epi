@@ -89,11 +89,7 @@ ui <- dashboardPage(
 
 
 
-
-
-
-
-######################### SERVER BODY ##############################
+############################## SERVER BODY ################################
 
 
 server <- function (input, output, session) {
@@ -117,13 +113,16 @@ server <- function (input, output, session) {
           fillOpacity = 0.7,
           bringToFront = TRUE))
   })
+  
+  # reactive expression for year slider
+  ## observe() ?
+  
+  # reactive expression for one-option widget (demo)
+  ## leafletProxy()
+  
 }
 
-# reactive expression for year slider
-## observe() ?
 
-# reactive expression for one-option widget (demo)
-## leafletProxy()
 
 
 
@@ -132,10 +131,7 @@ shinyApp(ui = ui, server = server)
 
 
 ###################### example ################
-# 
-# library(shiny)
-# library(leaflet)
-# library(RColorBrewer)
+
 
 # ui <- bootstrapPage(
 #   tags$style(type = "text/css",
@@ -163,6 +159,8 @@ shinyApp(ui = ui, server = server)
 #                               TRUE)
 #   )
 # )
+
+
 
 # server <- function(input, output, session) {
 # 
