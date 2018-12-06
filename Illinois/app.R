@@ -78,10 +78,11 @@ server <- function (input, output, session) {
           fillOpacity = 0.7,
           bringToFront = TRUE))
   })
+  
   # observe({
   #   
   #   year <- input$year
-  #   sex <- input$sex
+  #   
   #   
   #   sites <- pollen_subset %>% 
   #     filter(findInterval(pollen_subset$Age, c(age - 250, age + 250)) == 1 &
@@ -93,11 +94,10 @@ server <- function (input, output, session) {
   #                      lat = sites$Latitude,
   #                      opacity = sites$Pct)
   # })
-  # reactive expression for year slider
-  ## observe() ?
   
-  # reactive expression for sex widget
-  ## leafletProxy()
+  # observe({
+  # sex <- input$sex
+  # })
   
 }
 
