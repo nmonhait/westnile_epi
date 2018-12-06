@@ -22,7 +22,7 @@ library(stringr)
 
 # West nile df, only used to create full_il df 
 # county counts from full data set 
-il_wnv <- read_csv("data/data_il.csv") %>% 
+il_wnv <- read_csv("../data/data_il.csv") %>% 
   subset(il != "IL") %>% # some values do not have county level data and are indicated as IL
   rename(NAME = il) %>% 
   group_by(NAME) %>% 
@@ -41,7 +41,7 @@ il_wnv$NAME <- sub("St Clair", "St. Clair", il_wnv$NAME)
 
 # demographics from full data set
 # demography df to join with county location, used to create function dfs
-il_demog <-read_csv("data/data_il.csv") %>% 
+il_demog <-read_csv("../data/data_il.csv") %>% 
   subset(il != "IL") %>% # some values do not have county level data and are indicated as IL
   rename(NAME = il) %>% 
   select(year, agegroup, gender, race, NAME) %>% 

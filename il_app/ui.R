@@ -16,7 +16,7 @@ library(ggmap)
 ############################# UI BODY CODE ################################
 
 # create dashboard
-shinyUI(dashboardPage(
+ui <- dashboardPage(
   # set title
   dashboardHeader(title = "Demographic patterns of West Nile Virus in Illinois,
                   2005 - 2012",
