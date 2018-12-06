@@ -69,10 +69,10 @@ race_fun <- function(year_choice) {
     spread(key = year, value = n) %>% 
     group_by(race) %>% 
     select(year_choice, NAME) %>% 
-    spread(key = race, value = year_choice)
+    spread(key = race, value = year_choice) 
   
   race_count <-full_join(r_count, full_il, by = "NAME") %>% 
-    st_as_sf()
+    st_as_sf() 
   print(race_count)
 }
 
