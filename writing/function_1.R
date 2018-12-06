@@ -13,6 +13,7 @@ library(stringr)
 
 
 # West nile df, only used to create full_il df 
+# county counts from full data set 
 il_wnv <- read_csv("data/data_il.csv") %>% 
   subset(il != "IL") %>% # some values do not have county level data and are indicated as IL
   rename(NAME = il) %>% 
@@ -27,6 +28,10 @@ il_wnv$NAME <- sub("Mchenry", "McHenry", il_wnv$NAME)
 il_wnv$NAME <- sub("Mclean", "McLean", il_wnv$NAME)
 il_wnv$NAME <- sub("St Clair", "St. Clair", il_wnv$NAME)
 
+
+
+
+# demographics from full data set
 # demography df to join with county location, used to create function dfs
 il_demog <-read_csv("data/data_il.csv") %>% 
   subset(il != "IL") %>% # some values do not have county level data and are indicated as IL
@@ -42,12 +47,19 @@ il_demog$NAME <- sub("Mchenry", "McHenry", il_demog$NAME)
 il_demog$NAME <- sub("Mclean", "McLean", il_demog$NAME)
 il_demog$NAME <- sub("St Clair", "St. Clair", il_demog$NAME)
 
+
+
+
+# spatial information to be connected by county
 # Tigris IL df, arrange in alphabetical order, used for spatial info
 il_counties <- counties(state = "IL", cb = TRUE, class = "sf") %>% 
   st_set_crs(NA) %>%
   st_set_crs(4326) %>% 
   arrange(NAME)
 
+
+
+# merge county count df with spatial df for blank map
 # merge il_wnv and il_counties for blank map highlighted by county name and boundary
 full_il <- full_join(il_wnv, il_counties, by = "NAME") %>% 
   group_by(NAME) %>% 
@@ -55,14 +67,19 @@ full_il <- full_join(il_wnv, il_counties, by = "NAME") %>%
   st_as_sf() %>% 
   select(NAME, geometry)
 
-#making separate df for race, gender, and agegroup which will all go into functions
+
+
+
+
+
+# making separate df for race, gender, and agegroup which will all go into functions
 il_race <- il_demog %>% 
   arrange(NAME) %>% 
   group_by(NAME, race, year) %>% 
   count() %>% 
   ungroup()
 
-#function for age group filter
+# function for race filter
 race_fun <- function(year_choice) {
   
   r_count <- il_race %>% 
@@ -76,6 +93,9 @@ race_fun <- function(year_choice) {
   print(race_count)
 }
 
+
+
+
 # df for age group
 il_age <- il_demog %>% 
   arrange(NAME) %>% 
@@ -83,6 +103,7 @@ il_age <- il_demog %>%
   count() %>% 
   ungroup()
 
+# function for age filter
 age_fun <- function(year_choice) {
   
   a_count <- il_age %>% 
@@ -96,6 +117,9 @@ age_fun <- function(year_choice) {
   print(age_count)
 }
 
+
+
+
 # df for sex
 il_sex <- il_demog %>% 
   arrange(NAME) %>% 
@@ -103,6 +127,8 @@ il_sex <- il_demog %>%
   count() %>% 
   ungroup()
 
+
+# function for sex filter
 sex_fun <- function(year_choice) {
   
   s_count <- il_sex %>% 
@@ -116,9 +142,11 @@ sex_fun <- function(year_choice) {
   print(sex_count)
 }
 
+
+
 # FUNCTION for map outputs for different demographic indicators
-##df race_count, sex_count, age_count filtered by year of interest
-###demog is subset of race, sex, age of interest
+## df race_count, sex_count, age_count filtered by year of interest
+### demog is subset of race, sex, age of interest (filtered data)
 
 map_outputs <- function(df, demog) {
   pal <- leaflet::colorFactor((viridis_pal(option = "inferno",
@@ -153,12 +181,16 @@ map_outputs <- function(df, demog) {
   print(map)
 }
 
-#function example: 
-##women in 2011
+
+
+
+
+# function examples: 
+## women in 2011
 w_2011 <- sex_fun(year_choice = '2011') 
 map_outputs(w_2011, w_2011$Female)
 
-##asians in 2010
+## asians in 2010
 a_2010 <- race_fun(year_choice = '2010') 
 map_outputs(a_2010, a_2010$Asian)
 

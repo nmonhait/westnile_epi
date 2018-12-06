@@ -13,7 +13,7 @@ library(ggplot2)
 library(ggmap)
 
 # source helper file
-# source("il_app/helper.R")
+# source("il_app/function_1.R")
 
 
 shinyUI(dashboardPage(
@@ -27,7 +27,7 @@ shinyUI(dashboardPage(
        box(width = NULL, offset = 0,
            leafletOutput("map", height = 500))),
 column(width = 4, offset = 0,
-       fluidRow(width = NULL,
+       fluidRow(width = NULL, # widget for ONE OPTION (sex/gender, race, or age)
                 radioButtons("demo", label = "Choose one demographic indicator",
                              choiceNames = list(
                                HTML("<b> Gender: </b> Male"), 
