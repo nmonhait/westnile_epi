@@ -206,13 +206,13 @@ map_outputs <- function(df, demog) {
 
 ############################ FUNCTION EXAMPLES ############################
 
-
-# function examples: 
-## women in 2011
-w_2011 <- sex_fun(year_choice = '2011') 
-map_outputs(w_2011, w_2011$Female)
-
-## asians in 2010
-a_2010 <- race_fun(year_choice = '2010') 
-map_outputs(a_2010, a_2010$Asian)
+# 
+# # function examples: 
+# ## women in 2011
+# w_2011 <- sex_fun(year_choice = '2011') 
+# map_outputs(w_2011, w_2011$Female)
+# 
+# ## asians in 2010
+# a_2010 <- race_fun(year_choice = '2010') 
+# map_outputs(a_2010, a_2010$Asian)
 
