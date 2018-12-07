@@ -76,7 +76,9 @@ server <- function (input, output, session) {
   
   # create leaflet map
   output$map <- renderLeaflet({
-    pal <- leaflet::colorNumeric("Blues", # change color; quantiles/breaks
+    pal <- leaflet::colorBin("Blues", 
+                             bins = 100,
+                             pretty = TRUE, # change color; quantiles/breaks
                          domain = NULL)
     full_il %>% 
       left_join(sliderValues(), by = "NAME") %>% 
