@@ -22,23 +22,12 @@ ui <- dashboardPage(
   # set dashboard body with map, "one option widget", and year slider
   dashboardBody(
     fluidRow(
-      column(width = 7, # map widget
-             box(width = NULL, offset = 0, 
-                 leafletOutput("map", height = 500))), 
-      column(width = 4, offset = 0,
-             fluidRow(width = NULL, # sex widget
-                      radioButtons("sex", label = "Choose gender",
-                                   choiceNames = list(
-                                     HTML("<b> Gender: </b> Male"), 
-                                     HTML("<b> Gender: </b> Female")
-                                   ),
-                                   
-                                   choiceValues = list("text", "text")
-                      )
-             ))),
-    
-    column(width = 11,
-           box(width = 10,
+      column(width = 12, # map widget
+             box(width = 12, offset = 0, 
+                 leafletOutput("map", height = 400)))), 
+    fluidRow(
+      column(width = 12,
+           box(width = 8,
                sliderInput(inputId = "year", # year widget
                            label = "Select the year(s): ",
                            value = c(2005, 2012), 
@@ -46,8 +35,18 @@ ui <- dashboardPage(
                            max = 2012,
                            sep = "", # to remove commas from numeric years
                            ticks = TRUE
-               ))
-    ),
+               )),
+           box(width = 3, offset = 9, # sex widget
+              radioButtons("sex", label = "Choose gender",
+                            choiceNames = list(
+                                HTML("Male"), 
+                                HTML("Female")
+                                   ),
+                            choiceValues = list("text", "text")
+                          )
+                  )
+           )
+      ),
     skin = "purple"))
 
 
