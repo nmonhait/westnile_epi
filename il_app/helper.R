@@ -86,56 +86,55 @@ full_il <- full_join(il_wnv, il_counties, by = "NAME") %>%
 ##############################################################################
 
 
-
 ################# MAKE DFs PER FILTER OPTION (year, sex/age/race) ######
 
 
 #################### RACE DF AND FILTER FUNCTION #####################
-
-# df for race 
-il_race <- il_demog %>% 
-  arrange(NAME) %>% 
-  group_by(NAME, race, year) %>% 
-  count() %>% 
-  ungroup()
-
-# function for race filter
-race_fun <- function(year_choice) {
-  
-  r_count <- il_race %>% 
-    spread(key = year, value = n) %>% 
-    group_by(race) %>% 
-    select(year_choice, NAME) %>% 
-    spread(key = race, value = year_choice) 
-  
-  race_count <-full_join(r_count, full_il, by = "NAME") %>% 
-    st_as_sf() 
-  print(race_count)
-}
+# 
+# # df for race 
+# il_race <- il_demog %>% 
+#   arrange(NAME) %>% 
+#   group_by(NAME, race, year) %>% 
+#   count() %>% 
+#   ungroup()
+# 
+# # function for race filter
+# race_fun <- function(year_choice) {
+#   
+#   r_count <- il_race %>% 
+#     spread(key = year, value = n) %>% 
+#     group_by(race) %>% 
+#     select(year_choice, NAME) %>% 
+#     spread(key = race, value = year_choice) 
+#   
+#   race_count <-full_join(r_count, full_il, by = "NAME") %>% 
+#     st_as_sf() 
+#   print(race_count)
+# }
 
 
 #################### AGE GROUP DF AND FILTER FUNCTION ################
 
-# df for age group
-il_age <- il_demog %>% 
-  arrange(NAME) %>% 
-  group_by(NAME, agegroup, year) %>% 
-  count() %>% 
-  ungroup()
-
-# function for age filter
-age_fun <- function(year_choice) {
-  
-  a_count <- il_age %>% 
-    spread(key = year, value = n) %>% 
-    group_by(agegroup) %>% 
-    select(year_choice, NAME) %>% 
-    spread(key = agegroup, value = year_choice)
-  
-  age_count <-full_join(a_count, full_il, by = "NAME") %>% 
-    st_as_sf()
-  print(age_count)
-}
+# # df for age group
+# il_age <- il_demog %>% 
+#   arrange(NAME) %>% 
+#   group_by(NAME, agegroup, year) %>% 
+#   count() %>% 
+#   ungroup()
+# 
+# # function for age filter
+# age_fun <- function(year_choice) {
+#   
+#   a_count <- il_age %>% 
+#     spread(key = year, value = n) %>% 
+#     group_by(agegroup) %>% 
+#     select(year_choice, NAME) %>% 
+#     spread(key = agegroup, value = year_choice)
+#   
+#   age_count <-full_join(a_count, full_il, by = "NAME") %>% 
+#     st_as_sf()
+#   print(age_count)
+# }
 
 
 
