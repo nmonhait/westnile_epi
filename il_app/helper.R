@@ -150,7 +150,7 @@ il_sex <- il_demog %>%
 
 
 # function for sex filter
-sex_fun <- function(year_choice) {
+sex_fun <- function(year_choice, sex) {
   
   s_count <- il_sex %>% 
     spread(key = year, value = n) %>% 

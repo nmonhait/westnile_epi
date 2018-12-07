@@ -37,15 +37,18 @@ ui <- dashboardPage(
                            ticks = TRUE
                )),
            box(width = 3, offset = 9, # sex widget
-              radioButtons("sex", label = "Choose gender",
+              radioButtons("gender", label = "Choose gender",
                             choiceNames = list(
                                 HTML("Male"), 
                                 HTML("Female")
                                    ),
-                            choiceValues = list("text", "text")
+                            choiceValues = list("Male", "Female")
                           )
                   )
-           )
+           ),
+      fluidRow(
+        tableOutput("values")
+      )
       ),
     skin = "purple"))
 
@@ -57,6 +60,19 @@ ui <- dashboardPage(
 
 
 server <- function (input, output, session) {
+  sliderValues <- reactive({
+    il_sex %>% 
+      filter(gender == input$gender) %>% 
+      filter(year >= input$year[1] & year <= input$year[2]) %>% 
+      group_by(NAME) %>% 
+      summarize(n = sum(n)) %>% 
+      mutate(labels = paste0('<strong>', NAME, '</strong>',
+                             '<br/>', 'Count: ', '<strong>', n, '</strong>', ' '))
+  })
+  
+  output$values <- renderTable({
+    sliderValues()
+  })
   
   # year_filter <- reactive({
   #   il_demog[il_demog$year >= input$]
@@ -69,11 +85,15 @@ server <- function (input, output, session) {
   # 
   # create leaflet map
   output$map <- renderLeaflet({
-    leaflet(full_il) %>%
+    pal <- leaflet::colorNumeric("Blues", # change color; quantiles/breaks
+                         domain = NULL)
+    full_il %>% 
+      left_join(sliderValues(), by = "NAME") %>% 
+      leaflet() %>%
       setView(lng = -89.3985, lat = 40.6331, zoom = 8) %>%
       addProviderTiles("OpenStreetMap.BlackAndWhite") %>%
       addPolygons(
-        fillColor = "grey",
+        fillColor = ~pal(n),
         weight = 2,
         opacity = 1,
         color = "white",
@@ -84,29 +104,13 @@ server <- function (input, output, session) {
           color = "#666",
           dashArray = "",
           fillOpacity = 0.7,
-          bringToFront = TRUE))
+          bringToFront = TRUE),
+        label = ~labels,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "15px",
+          direction = "auto"))
   })
-  
-  # observe({
-  #   
-  #   year <- input$year
-  #   
-  #   
-  #   sites <- pollen_subset %>% 
-  #     filter(findInterval(pollen_subset$Age, c(age - 250, age + 250)) == 1 &
-  #              pollen_subset$Taxon %in% taxon)
-  #   
-  #   leafletProxy("map") %>% 
-  #     clearMarkers() %>% 
-  #     addCircleMarkers(lng = sites$Longitude,
-  #                      lat = sites$Latitude,
-  #                      opacity = sites$Pct)
-  # })
-  
-  # observe({
-  # sex <- input$sex
-  # })
-  
 }
 
 
@@ -150,9 +154,9 @@ shinyApp(ui = ui, server = server)
 # server <- function(input, output, session) {
 # 
 #   # Reactive expression for the data subsetted to what the user selected
-#   filteredData <- reactive({
-#     quakes[quakes$mag >= input$range[1] & quakes$mag <= input$range[2],]
-#   })
+  # filteredData <- reactive({
+  #   quakes[quakes$mag >= input$range[1] & quakes$mag <= input$range[2],]
+  # })
 # 
 #   # This reactive expression represents the palette function,
 #   # which changes as the user makes selections in UI.
