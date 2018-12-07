@@ -59,15 +59,15 @@ ui <- dashboardPage(
 
 server <- function (input, output, session) {
   
-  year_filter <- reactive({
-    il_demog[il_demog$year >= input$]
-  })
-  
-  # Reactive expression for the data subsetted to what the user selected
-    filteredData <- reactive({
-      quakes[quakes$mag >= input$range[1] & quakes$mag <= input$range[2],]
-    })
-  
+  # year_filter <- reactive({
+  #   il_demog[il_demog$year >= input$]
+  # })
+  # 
+  # # Reactive expression for the data subsetted to what the user selected
+  #   filteredData <- reactive({
+  #     quakes[quakes$mag >= input$range[1] & quakes$mag <= input$range[2],]
+  #   })
+  # 
   # create leaflet map
   output$map <- renderLeaflet({
     leaflet(full_il) %>%
