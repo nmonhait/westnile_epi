@@ -66,8 +66,9 @@ server <- function (input, output, session) {
       filter(year >= input$year[1] & year <= input$year[2]) %>% 
       group_by(NAME) %>% 
       summarize(n = sum(n)) %>% 
-      mutate(labels = paste0('<strong>', NAME, '</strong>',
-                             '<br/>', 'Count: ', '<strong>', n, '</strong>', ' '))
+      mutate(labels = 
+        paste0(NAME, ' Count: ', n, ' ')
+        )
   })
   
   output$values <- renderTable({
