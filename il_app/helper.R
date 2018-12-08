@@ -23,9 +23,9 @@ library(RColorBrewer)
 ############################ COMPARE NA V. 0 ###########################
 
 # create df of all possible county/gender/year combinations
-
 county_gender_year_combos <- expand(il_sex, NAME, gender, year)
 
+# combine all possible combinations with existing counts 
 full_county_gender_year <- full_join(county_gender_year_combos, il_sex)
 
 
