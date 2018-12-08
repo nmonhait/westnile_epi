@@ -20,7 +20,16 @@ library(scales)
 library(RColorBrewer)
 
 
-############################ PREPARE RAW DATA #################################
+############################ COMPARE NA V. 0 ###########################
+
+# create df of all possible county/gender/year combinations
+
+county_gender_year_combos <- expand(il_sex, NAME, gender, year)
+
+
+
+
+############################ PREPARE RAW DATA ##########################
 
 ########### COUNTY-LEVEL WEST NILE VIRUS COUNTS ############
 
