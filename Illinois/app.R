@@ -78,7 +78,7 @@ server <- function (input, output, session) {
   # create leaflet map
   output$map <- renderLeaflet({
     pal <- leaflet::colorBin("Blues", 
-                             bins = 100,
+                             bins = 50,
                              pretty = TRUE,
                              domain = NULL)
     full_il %>% 
