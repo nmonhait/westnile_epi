@@ -1,9 +1,9 @@
-############################ ILLINOIS SHINY APP #############################
+############################ ILLINOIS SHINY APP ############################
 
 library(shinydashboard)
 library(shiny)
 
-####################### SOURCE HELPER FILE #########################
+########################### SOURCE HELPER FILE ############################
 
 
 source("helper.R")
@@ -19,7 +19,7 @@ ui <- dashboardPage(
                   titleWidth = 1000),
   # disable sidebar
   dashboardSidebar(disable = TRUE),
-  # set dashboard body with map, gender widget, and year slider
+  # set dashboard body with map, gender widget, and year widget
   dashboardBody(
     fluidRow(
       column(width = 12, # map widget
@@ -45,10 +45,10 @@ ui <- dashboardPage(
                             choiceValues = list("Male", "Female")
                           )
                   )
-           ),
-      fluidRow(
-        tableOutput("values")
-      )
+           )
+      # fluidRow(
+      #   tableOutput("values") # test table; delete after complete
+      # )
       ),
     skin = "purple"))
 
@@ -71,20 +71,20 @@ server <- function (input, output, session) {
         )
   })
   
-  output$values <- renderTable({
-    sliderValues()
-  })
+  # output$values <- renderTable({ # test table; delete after complete
+  #   sliderValues()
+  # })
   
   # create leaflet map
   output$map <- renderLeaflet({
     pal <- leaflet::colorBin("Blues", 
                              bins = 100,
-                             pretty = TRUE, # change color; quantiles/breaks
-                         domain = NULL)
+                             pretty = TRUE,
+                             domain = NULL)
     full_il %>% 
       left_join(sliderValues(), by = "NAME") %>% 
       leaflet() %>%
-      setView(lng = -89.3985, lat = 40.6331, zoom = 8) %>%
+      setView(lng = -89.3985, lat = 40.0000, zoom = 6) %>%
       addProviderTiles("OpenStreetMap.BlackAndWhite") %>%
       addPolygons(
         fillColor = ~pal(n),
@@ -106,6 +106,8 @@ server <- function (input, output, session) {
           direction = "auto"))
   })
 }
+
+############################# CALL APP ###################################
 
 shinyApp(ui = ui, server = server)
 
