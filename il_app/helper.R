@@ -26,7 +26,7 @@ library(RColorBrewer)
 
 county_gender_year_combos <- expand(il_sex, NAME, gender, year)
 
-
+full_county_gender_year <- full_join(county_gender_year_combos, il_sex)
 
 
 ############################ PREPARE RAW DATA ##########################
