@@ -46,9 +46,6 @@ ui <- dashboardPage(
                           )
                   )
            )
-      # fluidRow(
-      #   tableOutput("values") # test table; delete after complete
-      # )
       ),
     skin = "purple"))
 
@@ -70,10 +67,6 @@ server <- function (input, output, session) {
         paste0(NAME, ' Count: ', n, ' ')
         )
   })
-  
-  # output$values <- renderTable({ # test table; delete after complete
-  #   sliderValues()
-  # })
   
   # create leaflet map
   output$map <- renderLeaflet({
