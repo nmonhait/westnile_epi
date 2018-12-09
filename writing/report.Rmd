@@ -1,9 +1,8 @@
 ---
-title: "Incidence of West Nile Virus in the State of Illinois 2005-2012"
+title: "Visualizing demographic patterns of West Nile Virus in Illinois, 2005-2012"
 output:
-  word_document: default
-  html_document: default
-Group members: Nichole, Kathleen, Randy, and Jessy"
+  pdf_document: default
+Group members: Nichole Monhait, Kathleen Wendt, Randy Xun, and Jessy Jiao"
 ---
 
 ```{r setup, include=FALSE}
@@ -38,8 +37,4 @@ Overall, we really appreciated our instructors' suggestions. The suggestions giv
 
 If given more time, there are improvements we would make to our project. Had we intended to maintain this app, we would have carried through our original dataframe with all county, case, gender, and year combinations from its creation to the app. Due to the immense time spent troubleshooting this project, we decided to leave our functional code unaltered at this time. Despite this, we understand how this improvement would result in a cleaner, more reproducible version of our code. We also recognize that our current helper.R file contains code that we did not end up using. Rather than moving only used code to a new helper file, we decided to comment out the unused code. We believe this is a nice description of the process we went through to ultimately create this app. Had this not been a graded school assignment, we would have created a new file without these comments.  
 
-To conclude, we appreciated working through this assignment. In doing so, we not only enhanced our current skill sets but also learned a great deal involving leaflet and Shiny. We look forward to using these skills in further projects. 
-
-
-
-
+To conclude, we appreciated working through this assignment. In doing so, we not only enhanced our current skill sets but also learned a great deal involving `leaflet` and `Shiny`. We look forward to using these skills in further projects. 

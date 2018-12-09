@@ -1,12 +1,12 @@
 ---
-title: "Counts of West Nile Virus in the State of Illinois"
-author: 'Human epidemiology group 1: Nichole, Kathleen, Randy, and Jessy'
+title: "Visualizing demographic patterns of West Nile Virus in Illinois, 2005-2012"
+author: 'Human Epidemiology Group 1: Nichole, Kathleen, Randy, and Jessy'
 output:
   ioslides_presentation: default
   beamer_presentation: default
   slidy_presentation: default
   always_allow_html: yes
-subtitle: Interactive Map and Shiny App, 2005-2011
+subtitle: Creating a Shiny app
 font-family: Helvetica
 runtime: shiny
 ---
@@ -47,6 +47,7 @@ runtime: shiny
 > ![Interactive map of 2007](~/Desktop/temp_R/WNV.mp4){width = 420 height = 450}
 
 ## Shiny App
+
 In order to create an interactive platform for users to freely browse the counts of WNV from 2005-2012
 
 ### information about how to embed Shiny app  https://shiny.rstudio.com/articles/interactive-docs.html
