@@ -1,0 +1,104 @@
+---
+title: "Counts of West Nile Virus in the State of Illinois"
+author: 'Human epidemiology group 1: Nichole, Kathleen, Randy, and Jessy'
+output:
+  ioslides_presentation: default
+  beamer_presentation: default
+  slidy_presentation: default
+  always_allow_html: yes
+subtitle: Interactive Map and Shiny App, 2005-2011
+font-family: Helvetica
+runtime: shiny
+---
+```{r global_options, autosize = TRUE}
+```
+
+## Content
+
+- Introduction
+- The Creation of West Nile Virus (WNV) Interactive Map 
+- Interactive Shiny App
+- Issues
+- Conclusion
+
+## Introduction {.build}
+> - We chose WNV data of Illinois, which contained information such as race, age, year, and location, that we hoped to integrate into our interactive map and app
+
+> - The primary goal of our project was to use epidemiological and demographic information, including age, gender, incident count, ethnicity, location, and race, to map WNV in Illinois from 2005 to 2012
+
+> - <span style="font-weight:bold; color:red;">This project does fit into the broader scrope of WNV research, particularly in creating the interactive tools to engage the public in the discussion of prevention and intervention of WNV</span>
+
+## Interactive map of WNV counts {.build}
+> - Prepare raw data (county-level WNV counts, demographic data by case, spatial data per county, merge county counts with spatial data)
+
+> - Merge Illinois WNV and Illinois counties onto blank map highlighted by county name and boundary
+
+> - Add leaflet plot
+
+
+## Interactive map of WNV counts in 2005 {.build}
+> For example, this is the map of WNV counts in 2005
+
+> <div align="center"><img src="2005.png" width = 420 height = 450></div>
+
+## Interactive map of WNV counts from 2005 to 2012 {.build}
+> The map of WNV counts from 2005 to 2012
+
+> ![Interactive map of 2007](~/Desktop/temp_R/WNV.mp4){width = 420 height = 450}
+
+## Shiny App
+In order to create an interactive platform for users to freely browse the counts of WNV from 2005-2012
+
+### information about how to embed Shiny app  https://shiny.rstudio.com/articles/interactive-docs.html
+
+## Technical problems {.build}
+> - <div class="blue">Inconsistent leaflet plot rendering</div>
+
+> - Problem: the `addPolygons()` portion of the code 
+
+> - What we tried: changed to sf class to ss; restarted RStudio and updated versions of all packages and RStudio
+
+> - Solution: changed crs to 4326; reordered the merged dataframes to ensure that the spatial information was merged to the correct county
+  
+## Technical problems {.build}
+> - <div class="blue">Widgets did not line up</div>
+
+> - Problem: two `box()` widgets that could not fit horizontally with each other
+
+> - What we tried and solution: changed the `box()` function into another `fluidRows()`; reordered the widgets so that the year widget (a slider widget) gets its own row
+
+## Technical problems {.build}
+> - <div class="blue">Limited data to utilize in the Shiny App</div>
+
+> - Problem: no useful information to show on the map if filter more than one demographic indicators, due to the small dataset
+
+> - What we tried: redesigned the UI with HTML injected `radioButtons()`
+
+> - Solution: chose `choiceNames()` and `choiceValues()` 
+
+## Technical problems {.build}
+> - Widget: demographic
+
+> <div align="center"><img src="demo-widget.png" width = 420 height = 450></div>
+
+## Technical problems {.build}
+> - Widget choices: gender vs. race vs. age
+
+> <div align="center"><img src="gender-only-widget.png" width = 420 height = 450></div>
+
+## Technical problems {.build}
+> - Not sure the difference between `0` and `NA` for county WNV counts
+
+> <div align="center"><img src="na.png" width = 360 height = 460></div>
+
+## Other problem {.build}
+> - <div class="blue">Hard to find the data and work distribution</div>
+
+> - Solution: selected state level data instead; delegated tasks to different group members based on availabilities and preferences
+
+## Conclusion {.build}
+> - Help raise the awareness of WNV
+
+> - Visual interactive map and app help the general public to be more engaged in WNV prevention and intervention
+
+> - <span style="font-weight:bold; color:red;"> Most important: R programming skills into practice</span>
