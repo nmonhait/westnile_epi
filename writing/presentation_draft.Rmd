@@ -1,6 +1,6 @@
 ---
 title: "Incidence of West Nile Virus in the State of Illinois 2005-2011"
-author: 'Human epidemiology group 1: Nicole, Kathleen, Randy, and Jessy'
+author: 'Human epidemiology group 1: Nichole, Kathleen, Randy, and Jessy'
 subtitle: Interactive Map and Shiny App
 output:
   ioslides_presentation: default
