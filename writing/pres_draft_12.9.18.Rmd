@@ -27,7 +27,7 @@ runtime: shiny
 
 > - The primary goal of our project was to use epidemiological and demographic information, including case count, age, gender, race/ethnicity, and county to map patterns of WNV in Illinois from 2005 to 2012.
 
-> - <span style="font-weight:bold; color:red;">This project fits into the broader scrope of WNV research by creating interactive tools to engage the public in the discussion of the prevalence of WNV.</span>
+> - <span style="font-weight:bold; color:red;">This project fits into the broader scope of WNV research by creating interactive tools to engage the public in the discussion of the prevalence of WNV.</span>
 
 ## Interactive map of WNV counts {.build}
 > - Prepare raw data (county-level WNV counts, demographic data by case, spatial data per county, merge county counts with spatial data)
@@ -52,9 +52,9 @@ Interactive map with two widgets: year range (2005-2012) and gender
 
 > - Problem: `addPolygons()` 
 
-> - What we tried: changed to `sf` class to `sp`; restarted RStudio; updated versions of all packages and RStudio
+> - What we tried: changed to `sf` class to `sp`; restarted R Studio; updated versions of all packages and R Studio
 
-> - Solution: changed `crs` to 4326; reordered the merged dataframes to ensure that the spatial information was merged to the correct county
+> - Solution: changed `crs` to 4326; reordered the merged data frames to ensure that the spatial information was merged to the correct county
   
 ## Technical problems {.build}
 > - <div class="blue">Widgets did not line up</div>
@@ -66,7 +66,7 @@ Interactive map with two widgets: year range (2005-2012) and gender
 ## Technical problems {.build}
 > - <div class="blue">Limited data to utilize in the Shiny App</div>
 
-> - Problem: No useful information to display if filtering more than one demographic indicator, due to the small dataset
+> - Problem: No useful information to display if filtering more than one demographic indicator, due to the small data set
 
 > - Another problem: Column names not recognized when combined into one data frame for use in single-choice demographic widget (age, race, gender)
 
@@ -96,12 +96,12 @@ Interactive map with two widgets: year range (2005-2012) and gender
 ## Logistical problems {.build}
 > - <div class="blue">1. Hard to find the data and 2. delegate tasks evenly</div>
 
-> - Solution 1: Selected publicly availably, state-level data, even though it was less informative than it could have been
+> - Solution 1: Selected publicly available, state-level data, even though it was less informative than it could have been
 
 > - Solution 2: Delegate tasks to different group members based on availability and preferences, even if it meant one group member did more than another
 
 ## Conclusion {.build}
-> - Learned how to use `Shiny` for data exploration and information disemmination regarding topics in public health 
+> - Learned how to use `Shiny` for data exploration and information dissemination regarding topics in public health 
 
 > - Visual interactive map and app help the general public to be more engaged in WNV prevention and intervention
 
