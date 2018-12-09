@@ -16,48 +16,42 @@ runtime: shiny
 ## Content
 
 - Introduction
-- The Creation of West Nile Virus (WNV) Interactive Map 
+- West Nile Virus (WNV) Interactive Map 
 - Interactive Shiny App
 - Issues
 - Conclusion
 
 ## Introduction {.build}
-> - We chose WNV data of Illinois, which contained information such as race, age, year, and location, that we hoped to integrate into our interactive map and app
+> - We chose WNV data of Illinois, which contained information such as race, age, year, and county, that we hoped to integrate into our interactive map and app.
 
-> - The primary goal of our project was to use epidemiological and demographic information, including age, gender, incident count, ethnicity, location, and race, to map WNV in Illinois from 2005 to 2012
+> - The primary goal of our project was to use epidemiological and demographic information, including case count, age, gender, race/ethnicity, and county to map patterns of WNV in Illinois from 2005 to 2012.
 
-> - <span style="font-weight:bold; color:red;">This project does fit into the broader scrope of WNV research, particularly in creating the interactive tools to engage the public in the discussion of prevention and intervention of WNV</span>
+> - <span style="font-weight:bold; color:red;">This project fits into the broader scrope of WNV research by creating interactive tools to engage the public in the discussion of prevention and intervention of WNV.</span>
 
 ## Interactive map of WNV counts {.build}
 > - Prepare raw data (county-level WNV counts, demographic data by case, spatial data per county, merge county counts with spatial data)
 
 > - Merge Illinois WNV and Illinois counties onto blank map highlighted by county name and boundary
 
-> - Add leaflet plot
+> - `leaflet`
 
 
 ## Interactive map of WNV counts in 2005 {.build}
 > For example, this is the map of WNV counts in 2005
 
-> <div align="center"><img src="2005.png" width = 420 height = 450></div>
+> <div align="center"><img src="code-issues/2005.png" width = 420 height = 450></div>
 
-## Interactive map of WNV counts from 2005 to 2012 {.build}
-> The map of WNV counts from 2005 to 2012
+## `Shiny` App
 
-> ![Interactive map of 2007](~/Desktop/temp_R/WNV.mp4){width = 420 height = 450}
+Interactive map with two widgets: year range (2005-2012) and gender
 
-## Shiny App
-
-In order to create an interactive platform for users to freely browse the counts of WNV from 2005-2012
-
-### information about how to embed Shiny app  https://shiny.rstudio.com/articles/interactive-docs.html
 
 ## Technical problems {.build}
 > - <div class="blue">Inconsistent leaflet plot rendering</div>
 
-> - Problem: the `addPolygons()` portion of the code 
+> - Problem: `addPolygons()` 
 
-> - What we tried: changed to sf class to ss; restarted RStudio and updated versions of all packages and RStudio
+> - What we tried: changed to `sf` class to `sp`; restarted RStudio; updated versions of all packages and RStudio
 
 > - Solution: changed crs to 4326; reordered the merged dataframes to ensure that the spatial information was merged to the correct county
   
@@ -66,40 +60,48 @@ In order to create an interactive platform for users to freely browse the counts
 
 > - Problem: two `box()` widgets that could not fit horizontally with each other
 
-> - What we tried and solution: changed the `box()` function into another `fluidRows()`; reordered the widgets so that the year widget (a slider widget) gets its own row
+> - What we tried and solution: changed the `box()` function into another `fluidRows()`; reordered the widgets so that the year widget (a slider widget) gets its own row; used HTML code to customize web design
 
 ## Technical problems {.build}
 > - <div class="blue">Limited data to utilize in the Shiny App</div>
 
 > - Problem: no useful information to show on the map if filter more than one demographic indicators, due to the small dataset
 
-> - What we tried: redesigned the UI with HTML injected `radioButtons()`
+> - Another problem: Column names not recognized when combined into one data frame for use in single-choice demographic widget (age, race, gender)
 
-> - Solution: chose `choiceNames()` and `choiceValues()` 
+> - What we tried: redesigned the UI with HTML injected `radioButtons()`; 
+
+> - Solution: chose `choiceNames()` and `choiceValues()` for only one demographic indicator (gender)
 
 ## Technical problems {.build}
 > - Widget: demographic
 
-> <div align="center"><img src="demo-widget.png" width = 420 height = 450></div>
+> <div align="center"><img src="code-issues/demo-widget.png" width = 420 height = 450></div>
 
 ## Technical problems {.build}
 > - Widget choices: gender vs. race vs. age
 
-> <div align="center"><img src="gender-only-widget.png" width = 420 height = 450></div>
+> <div align="center"><img src="code-issues/gender-only-widget.png" width = 420 height = 450></div>
 
 ## Technical problems {.build}
-> - Not sure the difference between `0` and `NA` for county WNV counts
+> - Problem: Unclear difference between "0" and "NA" for county-level WNV counts
 
-> <div align="center"><img src="na.png" width = 360 height = 460></div>
+> - What we tried: `expand()` and `full_join` to compare all possible county-year-gender combinations with actual 
 
-## Other problem {.build}
-> - <div class="blue">Hard to find the data and work distribution</div>
+> - Lesson learned: Difference between "0" and "NA" matters, and we cannot assume we know which is true
 
-> - Solution: selected state level data instead; delegated tasks to different group members based on availabilities and preferences
+> <div align="center"><img src="code-issues/na.png" width = 360 height = 460></div>
+
+## Logistical problems {.build}
+> - <div class="blue">1. Hard to find the data and 2. delegate tasks evenly</div>
+
+> - Solution 1: Selected publicly availably, state-level data, even though it was less informative than it could have been
+
+> - Solution 2: Delegate tasks to different group members based on availability and preferences, even if it meant one group member doing more than another
 
 ## Conclusion {.build}
-> - Help raise the awareness of WNV
+> - Learned how to use `Shiny` for data exploration and information disemmination regarding topics in public health 
 
 > - Visual interactive map and app help the general public to be more engaged in WNV prevention and intervention
 
-> - <span style="font-weight:bold; color:red;"> Most important: R programming skills into practice</span>
+> - <span style="font-weight:bold; color:red;">R programming skills into practice</span>
