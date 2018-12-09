@@ -1,20 +1,15 @@
-Each group will need to generate:
+Visualizing demographic patterns of West Nile Virus in Illinois, 2005-2012
 
-1. R code for project.
 
-2. A brief report (4 to 5 pages) describing how the group tackled their
-problem, what pieces were particularly challenging and how they
-tackled those, what they would do differently if they started fresh,
-and what interesting things they found in this set of data. Each group
-must submit a draft of this the last Wednesday of class and submit
-the final version on the day of presentations.
 
-3. A presentation (12 minutes maximum) that covers the same material
-as the report. The groups will present these during finals week, in the
-time period scheduled for a final exam for our course.
+Kathleen Wendt, Nichole Monhait, Randy Xun, and Jessy Jiao
 
-Data information:
-https://data.illinois.gov/dataset/1405to12_iquery_wnvdata
 
-Our Shiny is modeled after the one here:
-http://shiny.rstudio.com/gallery/superzip-example.html
+
+As our final project in ERHS 535 (R Programming for Research) at Colorado State University, we created a Shiny app with an interactive map of the state of Illinois to depict the county-level trends of West Nile Virus cases in humans by year (2005-2012) and gender.
+
+
+
+Data source: https://data.illinois.gov/dataset/1405to12_iquery_wnvdata
+
+
