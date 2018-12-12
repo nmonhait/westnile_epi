@@ -1,0 +1,12 @@
+name: Illinois
+title: Illinois
+username:
+account: wendtke
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 614465
+bundleId: 1759490
+url: https://wendtke.shinyapps.io/Illinois/
+when: 1544652133.94594
+asMultiple: FALSE
+asStatic: FALSE

@@ -2,6 +2,7 @@
 
 library(shinydashboard)
 library(shiny)
+library(rsconnect)
 
 
 ########################### SOURCE HELPER FILE ############################
