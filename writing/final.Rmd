@@ -27,11 +27,11 @@ Furthermore, we created an app to add interactive functions through an embedded 
   First, we cleaned up the raw data, for example,we used `sub()` to clean up the county names. Then we `full_join`ed demographic and census data (like shown in Table 1 below). We also created counts of WNV per county, spatial data per county, and merge county counts with spatial data. Finally, we merged Illinois WNV counts and Illinois counties on to a blank map highlighted by county name and boundary, and added `leaflet` arguments, specifically `addProviderTiles` and `addPolygons`. An example of the interactive map of 2005 is shown in Figure 1 below.
 
 #### Table 1. Joined demographic and census data 
-![Joined demographic and census data](demo.png) 
+![Joined demographic and census data](code-issues/demo.png) 
 \newpage
 Figure 1. Interactive map of 2005
 
-![Joined demographic and census data](2005.png)
+![Joined demographic and census data](code-issues/2005.png)
 \newpage
 
 ## Technical Issues
