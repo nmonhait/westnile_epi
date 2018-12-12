@@ -1,6 +1,6 @@
 ---
-title: "Counts of West Nile Virus in the State of Illinois"
-subtitle: "Interactive Map and Shiny App, 2005-2012"
+title: "Counts of West Nile Virus in the State of Illinois, 2005-2012"
+subtitle: "Creating an Interactive Map and Shiny App"
 author: 'Human epidemiology group 1: Nichole Monhait, Kathleen Wendt, Randy Xun, and Jessy Jiao'
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
