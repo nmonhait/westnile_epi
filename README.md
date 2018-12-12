@@ -13,3 +13,6 @@ As our final project in ERHS 535 (R Programming for Research) at Colorado State 
 Data source: https://data.illinois.gov/dataset/1405to12_iquery_wnvdata
 
 
+
+Published Shiny app: https://wendtke.shinyapps.io/Illinois/
+
